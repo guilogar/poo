@@ -79,7 +79,7 @@ Fecha Fecha::operator =(const Fecha& f) {
 }
 
 // Sobrecarga operador pre-incremento (++Fecha).
-Fecha Fecha::operator ++() {
+Fecha& Fecha::operator ++() {
     *this += 1;
     return *this;
 }
@@ -92,7 +92,7 @@ Fecha Fecha::operator ++(int f) {
 }
 
 // Sobrecarga operador pre-decremento (--Fecha).
-Fecha Fecha::operator --() {
+Fecha& Fecha::operator --() {
     *this -= 1;
     return *this;
 }
@@ -119,7 +119,7 @@ Fecha Fecha::operator -(int f) const {
 }
 
 // Sobrecarga operador += .
-Fecha Fecha::operator +=(int f) {
+Fecha& Fecha::operator +=(int f) {
     struct tm fecha = obtenerStructTime();
     
     time_t manana = mktime(&fecha) + (numSegundosIncremento * f);
@@ -135,7 +135,7 @@ Fecha Fecha::operator +=(int f) {
 }
 
 // Sobrecarga operador -= .
-Fecha Fecha::operator -=(int f) {
+Fecha& Fecha::operator -=(int f) {
     (*this) += (f*-1);
     return *this;
 }
