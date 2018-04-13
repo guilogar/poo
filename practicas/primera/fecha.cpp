@@ -45,9 +45,7 @@ int Fecha::anno() const {
     return anno_;
 }
 
-// Empieza la sobrecarga de operadores.
-// Sobrecarga operador const char* .
-Fecha::operator const char*() const {
+const char* Fecha::cadena() const {
     char* fecha = new char[250];
     char* dia_str = new char[2];
     char* anno_str = new char[4];
@@ -70,6 +68,29 @@ Fecha::operator const char*() const {
     return fecha;
 }
 
+std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Fecha& f) {
+    os << f.cadena();
+    return os;
+}
+
+std::basic_istream<char>& operator >>(std::basic_istream<char>& is, const Fecha& f) {
+    char* fecha = new char[1000];
+    char* dia = new char[200];
+    char* mes = new char[200];
+    char* anno = new char[200];
+    
+    is.getline(fecha, 11);
+    
+    sscanf(fecha, "%s[2]/%s[2]/%[4]", dia, mes, anno);
+    std::cout << dia << std::endl;
+    std::cout << mes << std::endl;
+    std::cout << anno << std::endl;
+    std::cout << "======" << std::endl;
+    
+    return is;
+}
+
+// Empieza la sobrecarga de operadores.
 // Sobrecarga operador igual (=).
 Fecha Fecha::operator =(const Fecha& f) {
     dia_ = f.dia();
@@ -79,7 +100,7 @@ Fecha Fecha::operator =(const Fecha& f) {
 }
 
 // Sobrecarga operador pre-incremento (++Fecha).
-Fecha Fecha::operator ++() {
+Fecha& Fecha::operator ++() {
     *this += 1;
     return *this;
 }
@@ -92,7 +113,7 @@ Fecha Fecha::operator ++(int f) {
 }
 
 // Sobrecarga operador pre-decremento (--Fecha).
-Fecha Fecha::operator --() {
+Fecha& Fecha::operator --() {
     *this -= 1;
     return *this;
 }
@@ -119,7 +140,7 @@ Fecha Fecha::operator -(int f) const {
 }
 
 // Sobrecarga operador += .
-Fecha Fecha::operator +=(int f) {
+Fecha& Fecha::operator +=(int f) {
     struct tm fecha = obtenerStructTime();
     
     time_t manana = mktime(&fecha) + (numSegundosIncremento * f);
@@ -135,7 +156,7 @@ Fecha Fecha::operator +=(int f) {
 }
 
 // Sobrecarga operador -= .
-Fecha Fecha::operator -=(int f) {
+Fecha& Fecha::operator -=(int f) {
     (*this) += (f*-1);
     return *this;
 }

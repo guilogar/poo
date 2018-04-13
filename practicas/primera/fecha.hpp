@@ -8,7 +8,7 @@ class Fecha {
         static const char * diasSemana[];
         static const char * meses[];
         
-        Fecha(int dia = 0, int mes = 0, int anno = 0);
+        explicit Fecha(int dia = 0, int mes = 0, int anno = 0);
         Fecha(const char s[]);
         
         int dia() const;
@@ -16,25 +16,27 @@ class Fecha {
         int anno() const;
         
         //friend inline std::ostream& operator <<(std::ostream& os, const Fecha& f);
-        //friend std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Fecha& f);
+        friend std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Fecha& f);
+        friend std::basic_istream<char>& operator >>(std::basic_istream<char>& os, const Fecha& f);
         
-        operator const char*() const;
+        //operator const char*() const;
+        const char* cadena() const;
         
         static const int AnnoMinimo = 1902;
         static const int AnnoMaximo = 2037;
         
         Fecha operator =(const Fecha& f);
         
-        Fecha operator ++();
+        Fecha& operator ++();
         Fecha operator ++(int f);
-        Fecha operator --();
+        Fecha& operator --();
         Fecha operator --(int f);
         
         Fecha operator +(int f) const;
         Fecha operator -(int f) const;
         
-        Fecha operator +=(int f);
-        Fecha operator -=(int f);
+        Fecha& operator +=(int f);
+        Fecha& operator -=(int f);
         
         bool operator ==(const Fecha& f) const;
         bool operator !=(const Fecha& f) const;

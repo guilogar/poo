@@ -1,5 +1,9 @@
-#	$Id: Make_check.mk 375 2017-03-10 21:22:58Z gerardo $
-#
+#	$Id: Make_check.mk 377 2017-03-13 11:42:43Z gerardo $
+# Makefile para las comprobaciones estáticas de código fuente
+# de cadena.cpp y fecha.cpp, clases Cadena y Fecha, de la P0
+# ©2017 Los profesores de POO de la ESI de la UCA
+
+# Directorio donde está el código compartido del DSL
 DIR=../dsl-comprobaciones/
 
 # Obligatorio Clang, versión 3.9 al menos
@@ -12,7 +16,7 @@ CXXFLAGS    := -std=c++11
 # desarrollo de LLVM/CLang.
 LDFLAGS     := # -static
 LLVMLDFLAGS := $(shell llvm-config --libs) $(LDFLAGS)
-COMMONSRCS  := 	$(DIR)checkCode.cpp $(DIR)execute.cpp $(DIR)matchers.cpp
+COMMONSRCS  := $(DIR)caclibrary.cpp $(DIR)execute.cpp $(DIR)matchers.cpp
 SOURCES     := fecha_check.cpp cadena_check.cpp ${COMMONSRCS}
 COMMONHDRS  := $(COMMONSRCS:.cpp=.h) $(DIR)info.h
 COMMONOBJS  := $(COMMONSRCS:.cpp=.o)
@@ -30,13 +34,13 @@ fecha_check: fecha_check.o $(COMMONOBJS)
 	@echo "(LINK) fecha_check.o"
 	@$(CXX) -o $@ $^ $(CLANGLIBS) $(LLVMLDFLAGS)
 
-fecha_check.o: $(COMMONHDRS) $(COMMONOBJS) fecha.hpp fecha.cpp
+fecha_check.o: $(COMMONHDRS) fecha.hpp fecha.cpp
 
 cadena_check: cadena_check.o $(COMMONOBJS)
 	@echo "(LINK) cadena_check.o"
 	@$(CXX) -o $@ $^ $(CLANGLIBS) $(LLVMLDFLAGS)
 
-cadena_check.o: $(COMMONHDRS) $(COMMONOBJS) cadena.hpp cadena.cpp
+cadena_check.o: $(COMMONHDRS) cadena.hpp cadena.cpp
 
 check_Fecha: fecha_check
 	@echo Verificando fecha.cpp ...
