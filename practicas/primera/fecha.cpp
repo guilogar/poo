@@ -83,7 +83,6 @@ std::basic_istream<char>& operator >>(std::basic_istream<char>& is, Fecha& f) {
     
     is.getline(fecha_str, 11);
     
-    f = Fecha(fecha_str);
     try {
         f = Fecha(fecha_str);
     } catch(Fecha::Invalida &f) {

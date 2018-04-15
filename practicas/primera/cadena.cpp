@@ -51,10 +51,13 @@ Cadena::Cadena(const Cadena& c) {
     strcpy(cad_, c.cad_);
 }
 
-Cadena::Cadena(const Cadena&& c) {
+Cadena::Cadena(Cadena&& c) {
     tamanio_ = c.length();
     cad_ = new char[tamanio_ + 1];
     strcpy(cad_, c.cad_);
+    
+    c.cad_ = new char[0];
+    c.tamanio_ = 0;
 }
 
 // Metodo observador.
@@ -84,15 +87,39 @@ std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Cadena
 }
 
 std::basic_istream<char>& operator >>(std::basic_istream<char>& is, Cadena& c) {
-    char* palabra = new char[1000];
     
-    is >> palabra;
-    delete[] c.cad_;
-    c.tamanio_ = strlen(palabra);
-    c.cad_ = new char[c.tamanio_ + 1];
+    c.tamanio_ = 0;
     
-    strcpy(c.cad_, palabra);
+    int white_spaces = 0;
     
+    char* p = new char[2];
+    p[1] = '\0';
+    p[0] = is.get();
+    
+    if(p[0] != EOF) {
+        while(p[0] == ' ') { // Caso de entrada con espacios al principio.
+            p[0] = is.get();
+            white_spaces++;
+        }
+        
+        Cadena n;
+        while(p[0] != '\n' && p[0] != ' ' && is.gcount() > 0 &&
+              strcmp(p, " ") > 0 && c.tamanio_ < c.tamanioMaximo_) { // Caso general de palabras
+            n += p;
+            p[0] = is.get();
+            c = n;
+        }
+        if(p[0] == ' ') is.putback(' ');
+        else if(c.tamanio_ == c.tamanioMaximo_) c += p;
+        
+        // Caso de caso con solo espacios.
+        if(c.tamanio_ == 0 && white_spaces > 0) {
+            c.tamanio_ = 0;
+            c.cad_ = new char[c.tamanio_];
+        }
+    } else { // Caso de entrada vacia.
+        c.cad_ = new char[0];
+    }
     return is;
 }
 
@@ -109,22 +136,25 @@ Cadena& Cadena::operator =(const Cadena& c) {
     return *this;
 }
 
-Cadena& Cadena::operator =(const Cadena&& c) {
+Cadena& Cadena::operator =(Cadena&& c) noexcept {
     if(this != &c) {
         tamanio_ = c.length();
         cad_ = new char[tamanio_ + 1];
         strcpy(cad_, c.cad_);
+        
+        c.cad_ = new char[0];
+        c.tamanio_ = 0;
     }
     return *this;
 }
 
 Cadena& Cadena::operator +=(const Cadena& c) {
-    char* cc = new char[tamanio_];
+    char* cc = new char[tamanio_ + 1];
     strcpy(cc, cad_);
     
     tamanio_ += c.length();
     delete[] cad_;
-    cad_ = new char[tamanio_];
+    cad_ = new char[tamanio_ + 1];
     
     strcpy(cad_, cc);
     strcat(cad_, c.c_str());

@@ -12,7 +12,7 @@ class Cadena {
         Cadena(const char* cad);
         Cadena(int tamanio = 0);
         Cadena(const Cadena& c);
-        Cadena(const Cadena&& c);
+        Cadena(Cadena&& c);
         
         unsigned length() const;
         
@@ -27,7 +27,7 @@ class Cadena {
         friend std::basic_istream<char>& operator >>(std::basic_istream<char>& is, Cadena& c);
         
         Cadena& operator =(const Cadena& c);
-        Cadena& operator =(const Cadena&& c);
+        Cadena& operator =(Cadena&& c) noexcept;
         Cadena operator +(const Cadena& c);
         Cadena operator +(const Cadena& c) const;
         Cadena& operator +=(const Cadena& c);
@@ -89,6 +89,6 @@ class Cadena {
             return std::reverse_iterator<const_iterator> (cad_);
         }
     private:
-        int tamanio_, tamanioMaximo_ = 32;
+        int tamanio_, tamanioMaximo_ = 31;
         char* cad_;
 };
