@@ -11,6 +11,11 @@ Fecha::Fecha(int dia, int mes, int anno) {
     (mes == 0) ? mes_ = ++tiempoDescompuesto->tm_mon : mes_ = mes;
     (anno == 0) ? anno_ = tiempoDescompuesto->tm_year + 1900 : anno_ = anno;
     
+    if(mes_ == 2 || mes_ == 4 || mes_ == 6 || mes_ == 9 || mes_ == 11) {
+        if(dia_ >= 31)
+            throw Invalida ("Día incorrecto.");
+    }
+    
     if(anno_ < 0 || mes_ < 0 || dia_ < 0)
         throw Invalida ("Día o mes o año totalmente incorrectos.");
     
@@ -90,14 +95,6 @@ std::basic_istream<char>& operator >>(std::basic_istream<char>& is, Fecha& f) {
 }
 
 // Empieza la sobrecarga de operadores.
-// Sobrecarga operador igual (=).
-Fecha& Fecha::operator =(const Fecha& f) {
-    dia_ = f.dia();
-    mes_ = f.mes();
-    anno_ = f.anno();
-    return *this;
-}
-
 // Sobrecarga operador pre-incremento (++Fecha).
 Fecha& Fecha::operator ++() {
     *this += 1;

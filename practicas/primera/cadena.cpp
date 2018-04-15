@@ -21,7 +21,7 @@ Cadena::Cadena(int tamanio, const char caracter) {
     (tamanio < 0) ? throw TamanioInvalido () : tamanio_ = tamanio;
     
     cad_ = new char[tamanio_ + 1];
-    for (int i = 0; i < tamanio_ - 1; i++) { cad_[i] = caracter; }
+    for (int i = 0; i < tamanio_; i++) { cad_[i] = caracter; }
     cad_[tamanio_] = '\0';
 }
 
