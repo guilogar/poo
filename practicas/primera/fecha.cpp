@@ -79,12 +79,19 @@ std::basic_istream<char>& operator >>(std::basic_istream<char>& is, Fecha& f) {
     is.getline(fecha_str, 11);
     
     f = Fecha(fecha_str);
+    try {
+        f = Fecha(fecha_str);
+    } catch(Fecha::Invalida &f) {
+        is.setstate(std::ios_base::failbit);
+        throw f;
+    }
+    
     return is;
 }
 
 // Empieza la sobrecarga de operadores.
 // Sobrecarga operador igual (=).
-Fecha Fecha::operator =(const Fecha& f) {
+Fecha& Fecha::operator =(const Fecha& f) {
     dia_ = f.dia();
     mes_ = f.mes();
     anno_ = f.anno();

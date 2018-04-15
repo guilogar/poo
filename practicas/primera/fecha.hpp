@@ -25,7 +25,7 @@ class Fecha {
         static const int AnnoMinimo = 1902;
         static const int AnnoMaximo = 2037;
         
-        Fecha operator =(const Fecha& f);
+        Fecha& operator =(const Fecha& f);
         
         Fecha& operator ++();
         Fecha operator ++(int f);

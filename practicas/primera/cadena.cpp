@@ -64,6 +64,8 @@ unsigned Cadena::length() const {
 
 Cadena Cadena::substr(int init, int tam) const {
     if (init + tam >= tamanio_) throw std::out_of_range ("Tamaño maximo excedido.");
+    if (init < 0) throw std::out_of_range ("Tamaño maximo excedido.");
+    if (tam < 0) throw std::out_of_range ("Tamaño maximo excedido.");
     
     char* cc = new char[tam];
     for (int i = init, j = 0; i < init+tam; i++, j++) { cc[j] = cad_[i]; }
