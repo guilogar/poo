@@ -1,6 +1,6 @@
 #include "fecha.hpp"
 
-const char * Fecha::diasSemana[7] = {"domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sabado"};
+const char * Fecha::diasSemana[7] = {"domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"};
 const char * Fecha::meses[12] = {"enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"};
 
 Fecha::Fecha(int dia, int mes, int anno) {
