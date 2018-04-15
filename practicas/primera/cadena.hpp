@@ -28,17 +28,16 @@ class Cadena {
         
         Cadena& operator =(const Cadena& c);
         Cadena& operator =(const Cadena&& c);
-        Cadena& operator =(const char* c);
         Cadena operator +(const Cadena& c);
         Cadena operator +(const Cadena& c) const;
         Cadena& operator +=(const Cadena& c);
         
-        bool operator ==(const Cadena& c) const;
-        bool operator !=(const Cadena& c) const;
-        bool operator  >(const Cadena& c) const;
-        bool operator  <(const Cadena& c) const;
-        bool operator >=(const Cadena& c) const;
-        bool operator <=(const Cadena& c) const;
+        friend bool operator ==(const Cadena& p, const Cadena& c);
+        friend bool operator !=(const Cadena& p, const Cadena& c);
+        friend bool operator  >(const Cadena& p, const Cadena& c);
+        friend bool operator  <(const Cadena& p, const Cadena& c);
+        friend bool operator >=(const Cadena& p, const Cadena& c);
+        friend bool operator <=(const Cadena& p, const Cadena& c);
         
         ~Cadena();
         
@@ -50,26 +49,26 @@ class Cadena {
         typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
         
         iterator begin() { return cad_; }
-        iterator end() { return (cad_ + tamanio_ + 1); }
+        iterator end() { return (cad_ + tamanio_); }
         
         iterator begin() const { return cad_; }
-        iterator end() const { return (cad_ + tamanio_ + 1); }
+        iterator end() const { return (cad_ + tamanio_); }
         
         const_iterator cbegin() { return cad_; }
-        const_iterator cend() { return (cad_ + tamanio_ + 1); }
+        const_iterator cend() { return (cad_ + tamanio_); }
         
         const_iterator cbegin() const { return cad_; }
-        const_iterator cend() const { return (cad_ + tamanio_ + 1); }
+        const_iterator cend() const { return (cad_ + tamanio_); }
         
         reverse_iterator rbegin() {
-            return std::reverse_iterator<iterator> (cad_ + tamanio_ + 1);
+            return std::reverse_iterator<iterator> (cad_ + tamanio_);
         }
         reverse_iterator rend() {
             return std::reverse_iterator<iterator> (cad_);
         };
         
         reverse_iterator rbegin() const {
-            return std::reverse_iterator<iterator> (cad_ + tamanio_ + 1);
+            return std::reverse_iterator<iterator> (cad_ + tamanio_);
         }
         
         reverse_iterator rend() const {
@@ -77,14 +76,14 @@ class Cadena {
         };
         
         const_reverse_iterator crbegin() {
-            return std::reverse_iterator<const_iterator> (cad_ + tamanio_ + 1);
+            return std::reverse_iterator<const_iterator> (cad_ + tamanio_);
         }
         const_reverse_iterator crend() {
             return std::reverse_iterator<const_iterator> (cad_);
         }
         
         const_reverse_iterator crbegin() const {
-            return std::reverse_iterator<const_iterator> (cad_ + tamanio_ + 1);
+            return std::reverse_iterator<const_iterator> (cad_ + tamanio_);
         }
         const_reverse_iterator crend() const {
             return std::reverse_iterator<const_iterator> (cad_);

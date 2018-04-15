@@ -82,11 +82,12 @@ std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Cadena
 }
 
 std::basic_istream<char>& operator >>(std::basic_istream<char>& is, Cadena& c) {
-    char* palabra = new char[c.tamanioMaximo_];
+    char* palabra = new char[1000];
     
     is >> palabra;
     delete[] c.cad_;
-    c.cad_ = new char[is.gcount()];
+    c.tamanio_ = strlen(palabra);
+    c.cad_ = new char[c.tamanio_ + 1];
     
     strcpy(c.cad_, palabra);
     
@@ -95,13 +96,6 @@ std::basic_istream<char>& operator >>(std::basic_istream<char>& is, Cadena& c) {
 
 char& Cadena::operator [](int pos) const {
     return *(cad_ + pos);
-}
-
-Cadena& Cadena::operator =(const char* c) {
-    tamanio_ = strlen(c);
-    cad_ = new char[tamanio_];
-    strcpy(cad_, c);
-    return *this;
 }
 
 Cadena& Cadena::operator =(const Cadena& c) {
@@ -148,28 +142,28 @@ Cadena Cadena::operator +(const Cadena& c) const {
     return q;
 }
 
-bool Cadena::operator >(const Cadena& c) const {
-    return strcmp(cad_, c.c_str()) > 0;
+bool operator >(const Cadena& p, const Cadena& c) {
+    return strcmp(p.c_str(), c.c_str()) > 0;
 }
 
-bool Cadena::operator ==(const Cadena& c) const {
-    return strcmp(cad_, c.c_str()) == 0;
+bool operator ==(const Cadena& p, const Cadena& c) {
+    return strcmp(p.c_str(), c.c_str()) == 0;
 }
 
-bool Cadena::operator !=(const Cadena& c) const {
-    return !(Cadena(cad_) == Cadena(c));
+bool operator !=(const Cadena& p, const Cadena& c) {
+    return !(p == c);
 }
 
-bool Cadena::operator >=(const Cadena& c) const {
-    return (Cadena(cad_) > Cadena(c) || Cadena(cad_) == Cadena(c));
+bool operator >=(const Cadena& p, const Cadena& c) {
+    return (p > c || p == c);
 }
 
-bool Cadena::operator <(const Cadena& c) const {
-    return !(Cadena(cad_) >= Cadena(c));
+bool operator <(const Cadena& p, const Cadena& c) {
+    return !(p >= c);
 }
 
-bool Cadena::operator <=(const Cadena& c) const {
-    return !(Cadena(cad_) > Cadena(c));
+bool operator <=(const Cadena& p, const Cadena& c) {
+    return !(p > c);
 }
 
 // Destructor.

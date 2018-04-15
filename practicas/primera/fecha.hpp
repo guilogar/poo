@@ -38,12 +38,12 @@ class Fecha {
         Fecha& operator +=(int f);
         Fecha& operator -=(int f);
         
-        bool operator ==(const Fecha& f) const;
-        bool operator !=(const Fecha& f) const;
-        bool operator  >(const Fecha& f) const;
-        bool operator  <(const Fecha& f) const;
-        bool operator >=(const Fecha& f) const;
-        bool operator <=(const Fecha& f) const;
+        friend bool operator ==(const Fecha& p, const Fecha& f);
+        friend bool operator !=(const Fecha& p, const Fecha& f);
+        friend bool operator  >(const Fecha& p, const Fecha& f);
+        friend bool operator  <(const Fecha& p, const Fecha& f);
+        friend bool operator >=(const Fecha& p, const Fecha& f);
+        friend bool operator <=(const Fecha& p, const Fecha& f);
         
         class Invalida {
             public:

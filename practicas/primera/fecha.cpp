@@ -1,7 +1,7 @@
 #include "fecha.hpp"
 
-const char * Fecha::diasSemana[7] = {"Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"};
-const char * Fecha::meses[12] = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
+const char * Fecha::diasSemana[7] = {"domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sabado"};
+const char * Fecha::meses[12] = {"enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"};
 
 Fecha::Fecha(int dia, int mes, int anno) {
     time_t calendario = time(0);
@@ -53,7 +53,7 @@ const char* Fecha::cadena() const {
     strcpy(fecha, "");
     
     strcat(fecha, Fecha::diasSemana[this->diaSemana()]);
-    strcat(fecha, ", ");
+    strcat(fecha, " ");
     
     sprintf(dia_str, "%02d", this->dia());
     strcat(fecha, dia_str);
@@ -153,33 +153,33 @@ Fecha& Fecha::operator -=(int f) {
     return *this;
 }
 
-bool Fecha::operator ==(const Fecha& f) const {
-    return (this->dia() == f.dia() && this->mes() == f.mes() && this->anno() == f.anno());
+bool operator ==(const Fecha& p, const Fecha& f) {
+    return (p.dia() == f.dia() && p.mes() == f.mes() && p.anno() == f.anno());
 }
 
-bool Fecha::operator !=(const Fecha& f) const {
-    return !(*this == f);
+bool operator !=(const Fecha& p, const Fecha& f) {
+    return !(p == f);
 }
 
-bool Fecha::operator >(const Fecha& f) const {
-    if(this->anno() == f.anno()) {
-        if(this->mes() == f.mes())
-            return (this->dia() > f.dia());
-        return (this->mes() > f.mes());
+bool operator >(const Fecha& p, const Fecha& f) {
+    if(p.anno() == f.anno()) {
+        if(p.mes() == f.mes())
+            return (p.dia() > f.dia());
+        return (p.mes() > f.mes());
     }
-    return (this->anno() > f.anno());
+    return (p.anno() > f.anno());
 }
 
-bool Fecha::operator >=(const Fecha& f) const {
-    return (*this > f || *this == f);
+bool operator >=(const Fecha& p, const Fecha& f) {
+    return (p > f || p == f);
 }
 
-bool Fecha::operator <(const Fecha& f) const {
-    return !(*this >= f);
+bool operator <(const Fecha& p, const Fecha& f) {
+    return !(p >= f);
 }
 
-bool Fecha::operator <=(const Fecha& f) const {
-    return !(*this > f);
+bool operator <=(const Fecha& p, const Fecha& f) {
+    return !(p > f);
 }
 
 // Metodo privado.
