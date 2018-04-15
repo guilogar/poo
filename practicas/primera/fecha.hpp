@@ -9,7 +9,7 @@ class Fecha {
         static const char * meses[];
         
         explicit Fecha(int dia = 0, int mes = 0, int anno = 0);
-        Fecha(const char s[]);
+        Fecha(const char* s);
         
         int dia() const;
         int mes() const;
@@ -17,7 +17,7 @@ class Fecha {
         
         //friend inline std::ostream& operator <<(std::ostream& os, const Fecha& f);
         friend std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Fecha& f);
-        friend std::basic_istream<char>& operator >>(std::basic_istream<char>& os, const Fecha& f);
+        friend std::basic_istream<char>& operator >>(std::basic_istream<char>& is, Fecha& f);
         
         //operator const char*() const;
         const char* cadena() const;

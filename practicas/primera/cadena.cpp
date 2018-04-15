@@ -47,7 +47,13 @@ Cadena::Cadena(int tamanio) {
 
 Cadena::Cadena(const Cadena& c) {
     tamanio_ = c.length();
-    cad_ = new char[tamanio_];
+    cad_ = new char[tamanio_ + 1];
+    strcpy(cad_, c.cad_);
+}
+
+Cadena::Cadena(const Cadena&& c) {
+    tamanio_ = c.length();
+    cad_ = new char[tamanio_ + 1];
     strcpy(cad_, c.cad_);
 }
 
@@ -70,6 +76,23 @@ char& Cadena::at(int pos) const {
 }
 
 // Sobrecarga de operadores.
+std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Cadena& c) {
+    os << c.c_str();
+    return os;
+}
+
+std::basic_istream<char>& operator >>(std::basic_istream<char>& is, Cadena& c) {
+    char* palabra = new char[c.tamanioMaximo_];
+    
+    is >> palabra;
+    delete[] c.cad_;
+    c.cad_ = new char[is.gcount()];
+    
+    strcpy(c.cad_, palabra);
+    
+    return is;
+}
+
 char& Cadena::operator [](int pos) const {
     return *(cad_ + pos);
 }
@@ -90,67 +113,62 @@ Cadena& Cadena::operator =(const Cadena& c) {
     return *this;
 }
 
-Cadena& Cadena::operator +=(const char* c) {
+Cadena& Cadena::operator =(const Cadena&& c) {
+    if(this != &c) {
+        tamanio_ = c.length();
+        cad_ = new char[tamanio_ + 1];
+        strcpy(cad_, c.cad_);
+    }
+    return *this;
+}
+
+Cadena& Cadena::operator +=(const Cadena& c) {
     char* cc = new char[tamanio_];
     strcpy(cc, cad_);
     
-    tamanio_ += strlen(c);
+    tamanio_ += c.length();
     delete[] cad_;
     cad_ = new char[tamanio_];
     
     strcpy(cad_, cc);
-    strcat(cad_, c);
+    strcat(cad_, c.c_str());
     
     return *this;
 }
 
-Cadena Cadena::operator +(const char* c) {
+Cadena Cadena::operator +(const Cadena& c) {
     Cadena q(*this);
     q += c;
     return q;
 }
 
-Cadena Cadena::operator +(const char* c) const {
+Cadena Cadena::operator +(const Cadena& c) const {
     Cadena q(*this);
     q += c;
     return q;
 }
 
-bool Cadena::operator >(const char* c) const {
-    int tamanioPropio = strlen(cad_);
-    int tamanioAjeno = strlen(c);
-    bool mayor = true;
-    
-    for (int i = 0; i < tamanioPropio && i < tamanioAjeno && mayor; i++) {
-        mayor = (cad_[i] == c[i]);
-    }
-    return (mayor) ? (tamanioPropio > tamanioAjeno) : mayor;
+bool Cadena::operator >(const Cadena& c) const {
+    return strcmp(cad_, c.c_str()) > 0;
 }
 
-bool Cadena::operator ==(const char* c) const {
-    int tamanioPropio = strlen(cad_);
-    int tamanioAjeno = strlen(c);
-    bool igual = true;
-    
-    for (int i = 0; i < tamanioPropio && i < tamanioAjeno && igual; i++) {
-        igual = (cad_[i] == c[i]);
-    }
-    return (igual) ? (tamanioPropio == tamanioAjeno) : igual;
+bool Cadena::operator ==(const Cadena& c) const {
+    return strcmp(cad_, c.c_str()) == 0;
 }
 
-bool Cadena::operator !=(const char* c) const {
+bool Cadena::operator !=(const Cadena& c) const {
     return !(Cadena(cad_) == Cadena(c));
 }
 
-bool Cadena::operator >=(const char* c) const {
+bool Cadena::operator >=(const Cadena& c) const {
     return (Cadena(cad_) > Cadena(c) || Cadena(cad_) == Cadena(c));
 }
 
-bool Cadena::operator <(const char* c) const {
+bool Cadena::operator <(const Cadena& c) const {
     return !(Cadena(cad_) >= Cadena(c));
 }
 
-bool Cadena::operator <=(const char* c) const {
+bool Cadena::operator <=(const Cadena& c) const {
     return !(Cadena(cad_) > Cadena(c));
 }
 

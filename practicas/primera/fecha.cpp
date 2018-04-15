@@ -29,7 +29,7 @@ Fecha::Fecha(int dia, int mes, int anno) {
     }
 }
 
-Fecha::Fecha(const char s[]) {
+Fecha::Fecha(const char* s) {
     int dia, mes, anno;
     bool correct_format = (sscanf(s, "%d/%d/%d", &dia, &mes, &anno) == 3);
     (correct_format) ? *this = Fecha(dia, mes, anno) : throw Invalida("Formato Incorrecto.");
@@ -73,20 +73,12 @@ std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Fecha&
     return os;
 }
 
-std::basic_istream<char>& operator >>(std::basic_istream<char>& is, const Fecha& f) {
-    char* fecha = new char[1000];
-    char* dia = new char[200];
-    char* mes = new char[200];
-    char* anno = new char[200];
+std::basic_istream<char>& operator >>(std::basic_istream<char>& is, Fecha& f) {
+    char* fecha_str = new char[1000];
     
-    is.getline(fecha, 11);
+    is.getline(fecha_str, 11);
     
-    sscanf(fecha, "%s[2]/%s[2]/%[4]", dia, mes, anno);
-    std::cout << dia << std::endl;
-    std::cout << mes << std::endl;
-    std::cout << anno << std::endl;
-    std::cout << "======" << std::endl;
-    
+    f = Fecha(fecha_str);
     return is;
 }
 
