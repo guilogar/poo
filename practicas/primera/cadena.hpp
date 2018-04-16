@@ -21,7 +21,6 @@ class Cadena {
         char& at(int pos) const;
         char& operator[](int pos) const;
         
-        //operator const char* () const { return cad_; }
         const char* c_str() const { return cad_; }
         friend std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Cadena& c);
         friend std::basic_istream<char>& operator >>(std::basic_istream<char>& is, Cadena& c);

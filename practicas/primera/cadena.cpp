@@ -89,7 +89,6 @@ std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Cadena
 std::basic_istream<char>& operator >>(std::basic_istream<char>& is, Cadena& c) {
     
     c.tamanio_ = 0;
-    
     int white_spaces = 0;
     
     char* p = new char[2];
@@ -102,9 +101,10 @@ std::basic_istream<char>& operator >>(std::basic_istream<char>& is, Cadena& c) {
             white_spaces++;
         }
         
+        // Caso general de palabras
         Cadena n;
         while(p[0] != '\n' && p[0] != ' ' && is.gcount() > 0 &&
-              strcmp(p, " ") > 0 && c.tamanio_ < c.tamanioMaximo_) { // Caso general de palabras
+              strcmp(p, " ") > 0 && c.tamanio_ < c.tamanioMaximo_) {
             n += p;
             p[0] = is.get();
             c = n;
