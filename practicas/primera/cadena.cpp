@@ -88,39 +88,55 @@ std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Cadena
 
 std::basic_istream<char>& operator >>(std::basic_istream<char>& is, Cadena& c) {
     
-    c.tamanio_ = 0;
-    int white_spaces = 0;
+    char* palabra = new char[c.tamanioMaximo_];
+    palabra[0] = '\0';
     
-    char* p = new char[2];
-    p[1] = '\0';
-    p[0] = is.get();
+    is.width(c.tamanioMaximo_ + 1);
     
-    if(p[0] != EOF) {
-        while(p[0] == ' ') { // Caso de entrada con espacios al principio.
-            p[0] = is.get();
-            white_spaces++;
-        }
-        
-        // Caso general de palabras
-        Cadena n;
-        while(p[0] != '\n' && p[0] != ' ' && is.gcount() > 0 &&
-              strcmp(p, " ") > 0 && c.tamanio_ < c.tamanioMaximo_) {
-            n += p;
-            p[0] = is.get();
-            c = n;
-        }
-        if(p[0] == ' ') is.putback(' ');
-        else if(c.tamanio_ == c.tamanioMaximo_) c += p;
-        
-        // Caso de caso con solo espacios.
-        if(c.tamanio_ == 0 && white_spaces > 0) {
-            c.tamanio_ = 0;
-            c.cad_ = new char[c.tamanio_];
-        }
-    } else { // Caso de entrada vacia.
-        c.cad_ = new char[0];
-    }
+    is >> palabra;
+    c.tamanio_ = strlen(palabra);
+    c.cad_ = new char[c.tamanio_];
+    
+    strcpy(c.cad_, palabra);
+    
     return is;
+
+    /*
+     *
+     *c.tamanio_ = 0;
+     *int white_spaces = 0;
+     *
+     *char* p = new char[2];
+     *p[1] = '\0';
+     *p[0] = is.get();
+     *
+     *if(p[0] != EOF) {
+     *    while(p[0] == ' ') { // Caso de entrada con espacios al principio.
+     *        p[0] = is.get();
+     *        white_spaces++;
+     *    }
+     *    
+     *    // Caso general de palabras
+     *    Cadena n;
+     *    while(p[0] != '\n' && p[0] != ' ' && is.gcount() > 0 &&
+     *          strcmp(p, " ") > 0 && c.tamanio_ < c.tamanioMaximo_) {
+     *        n += p;
+     *        p[0] = is.get();
+     *        c = n;
+     *    }
+     *    if(p[0] == ' ') is.putback(' ');
+     *    else if(c.tamanio_ == c.tamanioMaximo_) c += p;
+     *    
+     *    // Caso de caso con solo espacios.
+     *    if(c.tamanio_ == 0 && white_spaces > 0) {
+     *        c.tamanio_ = 0;
+     *        c.cad_ = new char[c.tamanio_];
+     *    }
+     *} else { // Caso de entrada vacia.
+     *    c.cad_ = new char[0];
+     *}
+     *return is;
+     */
 }
 
 char& Cadena::operator [](int pos) const {

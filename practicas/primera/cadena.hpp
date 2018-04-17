@@ -88,6 +88,6 @@ class Cadena {
             return std::reverse_iterator<const_iterator> (cad_);
         }
     private:
-        int tamanio_, tamanioMaximo_ = 31;
+        int tamanio_, tamanioMaximo_ = 32;
         char* cad_;
 };
