@@ -9,11 +9,11 @@
 # de práctica: P1, P2, etc.
 # NOMBREALUMNO debería ser de la forma: Ap1_Ap2_NP
 # (Véanse las instrucciones de entrega).
-NOMBREALUMNO =
+NOMBREALUMNO = Lopez_Garcia_Guillermo
 
 # Compilador de C++ preferido: el de LLVM (clang++), el de GNU (g++),
 # el de GNU en la versión 5 (g++-5), el de Intel (icpc)...
-CXX = clang++
+CXX = g++
 
 # ¿Qué estándar seguir?
 # c++98 o c++03 (o -ansi): estándar de 1998, corregido en 2003. NO USAR YA.
@@ -21,7 +21,7 @@ CXX = clang++
 # c++11: estándar de 2011. Versión mínima recomendada.
 # c++14: estándar de 2014. Recomendado si su compilador lo admite.
 # c++1z o c++17: estándar de 2017.
-STD = c++14
+STD = c++11
 
 # Opciones para el compilador. Añada o quite las que prefiera pero deje
 # las 2 primeras.
