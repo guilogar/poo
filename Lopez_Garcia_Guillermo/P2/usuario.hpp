@@ -1,3 +1,12 @@
+#ifndef USUARIO_H
+#define USUARIO_H
+
+#include "fecha.hpp"
+#include "cadena.hpp"
+#include "tarjeta.hpp"
+#include "articulo.hpp"
+
+class Tarjeta;
 
 class Usuario {
     public:
@@ -7,18 +16,28 @@ class Usuario {
         Cadena nombre() const;
         Cadena apellidos() const;
         Cadena direccion() const;
-        const Tarjetas& tarjetas() const;
+        const Tarjeta& tarjetas() const;
         void compra(Articulo& a, unsigned id);
-        const Articulos& compra() const;
+        const Articulo& compra() const;
         size_t n_articulos() const;
     private:
         
-}
+};
 
 class Clave {
     public:
+        Clave(const char*);
         Cadena clave() const;
         bool verifica(const char*);
-    private:
         
-}
+        enum Razon {CORTA, ERROR_CRYPT};
+        class Incorrecta {
+            public:
+                Incorrecta(Razon z) : z_(z) { }
+            private:
+                Razon z_;
+        };
+    private:
+        Cadena clave_;
+};
+#endif

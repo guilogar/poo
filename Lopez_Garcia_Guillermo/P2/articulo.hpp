@@ -1,3 +1,5 @@
+#include "fecha.hpp"
+#include "cadena.hpp"
 
 class Articulo {
     public:
@@ -10,13 +12,4 @@ class Articulo {
         unsigned& stock();
     private:
         
-}
-
-class Numero {
-    public:
-        operator const char*() const {
-            
-        }
-    private:
-        
-}
+};
