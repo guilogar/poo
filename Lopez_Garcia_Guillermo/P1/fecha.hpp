@@ -3,6 +3,9 @@
 #include <iostream>
 #include <regex>
 
+#ifndef FECHA_HPP
+#define FECHA_HPP
+
 class Fecha {
     public:
         static const char * diasSemana[];
@@ -58,4 +61,4 @@ class Fecha {
         tm obtenerStructTime() const;
         int diaSemana() const;
 };
-
+#endif

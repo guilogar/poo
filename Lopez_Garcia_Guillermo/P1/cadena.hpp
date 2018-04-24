@@ -4,6 +4,9 @@
 #include <string.h>
 #include <iterator>
 
+#ifndef CADENA_HPP
+#define CADENA_HPP
+
 class Cadena {
     public:
         Cadena(const char* cad, int tamanio);
@@ -91,3 +94,4 @@ class Cadena {
         int tamanio_, tamanioMaximo_ = 32;
         char* cad_;
 };
+#endif

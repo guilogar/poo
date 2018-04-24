@@ -1,5 +1,8 @@
 #include "fecha.hpp"
 
+#ifndef FECHA_CPP
+#define FECHA_CPP
+
 const char * Fecha::diasSemana[7] = {"domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"};
 const char * Fecha::meses[12] = {"enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"};
 
@@ -202,3 +205,4 @@ int Fecha::diaSemana() const {
     
     return tiempoDescompuesto->tm_wday;
 }
+#endif

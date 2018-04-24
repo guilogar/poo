@@ -1,5 +1,8 @@
 #include "cadena.hpp"
 
+#ifndef CADENA_CPP
+#define CADENA_CPP
+
 // Constructores
 Cadena::Cadena(const char* cad, int tamanio) {
     (tamanio < 0) ? throw TamanioInvalido () : tamanio_ = tamanio;
@@ -222,3 +225,4 @@ Cadena::~Cadena() {
         cad_ = nullptr;
     }
 }
+#endif
