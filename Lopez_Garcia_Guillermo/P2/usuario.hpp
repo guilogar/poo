@@ -8,16 +8,20 @@
 
 #include <map>
 #include <unordered_map>
+#include <unordered_set>
+#include <string>
 
 class Tarjeta;
 class Numero;
 
 class Clave {
     public:
-        Clave(const char*);
+        explicit Clave(const char* = "");
+        Clave(const Clave& c);
         Cadena clave() const { return clave_; };
         bool verifica(const char*);
         
+        friend std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Clave& c);
         enum Razon {CORTA, ERROR_CRYPT};
         class Incorrecta {
             public:
@@ -29,10 +33,20 @@ class Clave {
         Cadena clave_;
 };
 
+namespace std {
+    template <> struct hash<Cadena> {
+        size_t operator()(const Cadena& cad) const { // conversión const char* ->string
+            return hash<string>{}(cad.c_str());
+        }
+    };
+}
+
 class Usuario {
     public:
         typedef std::map<Numero, Tarjeta*> Tarjetas;
         typedef std::unordered_map<Articulo*, unsigned int> Articulos;
+        typedef std::unordered_set<Cadena> Usuarios;
+        static Usuarios usuarios_;
         
         Usuario(Cadena ident, Cadena nom, Cadena ape, Cadena direc, Clave c);
         void es_titular_de(Tarjeta& j);
@@ -43,7 +57,7 @@ class Usuario {
         Cadena apellidos() const { return apellidos_; }
         Cadena direccion() const { return direccion_; }
         
-        void compra(Articulos& a, unsigned id = 1);
+        void compra(Articulo& a, unsigned id = 1);
         const Tarjetas& tarjetas() const { return tarjetas_; }
         const Articulos& compra() const { return articulos_; }
         size_t n_articulos() const;
@@ -73,5 +87,6 @@ class Usuario {
         Tarjetas tarjetas_;
         Articulos articulos_;
 };
+
 
 #endif

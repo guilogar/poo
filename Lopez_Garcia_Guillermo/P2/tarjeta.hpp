@@ -37,15 +37,18 @@ class Tarjeta {
         enum Tipo { VISA, Mastercard, Maestro, JCB, AmericanExpress };
         
         Tarjeta(Tipo t, Numero n, Usuario *u, Fecha f);
+        Tarjeta(const Tarjeta&) = delete;
+        Tarjeta& operator =(const Tarjeta&) = delete;
+        
         Tipo tipo() const { return tipo_; }
         Numero numero() const { return numero_; }
         Fecha caducidad() const { return caducidad_; }
         Cadena titular_facial() const { return titular_facial_; }
         const Usuario* titular() const { return usuario_; }
         
-        Tarjeta(const Tarjeta& t) = delete;
-        Tarjeta& operator =(const Tarjeta& t) = delete;
+        bool operator <(const Tarjeta& t);
         
+        friend std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Tarjeta& t);
         void anular_titular() { usuario_ = nullptr; }
         
         class Caducada {

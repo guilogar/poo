@@ -29,6 +29,10 @@ Clave::Clave(const char* contrasena) {
         throw Incorrecta(ERROR_CRYPT);
 }
 
+Clave::Clave(const Clave& c) {
+    clave_ = c.clave();
+}
+
 bool Clave::verifica(const char* posible_contrasena) {
     if(const char* const pcc = crypt(posible_contrasena, clave_.c_str()))
         return clave_ == pcc;
@@ -39,6 +43,41 @@ bool Clave::verifica(const char* posible_contrasena) {
 std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Clave& c) {
     os << c.clave();
     return os;
+}
+
+Usuario::Usuario(Cadena ident, Cadena nom, Cadena ape, Cadena direc, Clave c) {
+    std::hash<std::string>{}(ident.c_str());
+    
+    //if(! usuarios_.insert(ident, hash(ident)).second)
+        //throw Id_duplicado(ident);
+    
+    identificador_ = ident;
+    nombre_ = nom;
+    apellidos_ = ape;
+    direccion_ = direc;
+    contrasena_ = c;
+}
+
+void Usuario::es_titular_de(Tarjeta& j) {
+    tarjetas_.insert(std::make_pair(j.numero(), &j));
+    
+}
+
+void Usuario::no_es_titular_de(Tarjeta& j) {
+    for(auto i : tarjetas_) {
+        if(i.second == &j) {
+            tarjetas_.erase(i.first); j.anular_titular();
+            break;
+        }
+    }
+}
+
+void Usuario::compra(Articulo& a, unsigned can) {
+    articulos_.insert(std::make_pair(&a, can));
+}
+
+size_t Usuario::n_articulos() const {
+    return articulos_.size();
 }
 
 std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Usuario& u) {
