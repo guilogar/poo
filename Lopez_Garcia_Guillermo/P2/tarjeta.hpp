@@ -4,6 +4,7 @@
 #include "fecha.hpp"
 #include "cadena.hpp"
 #include "usuario.hpp"
+//#include "../luhn.cpp"
 
 #include <locale>
 #include <cstring>
@@ -13,11 +14,9 @@ class Usuario;
 class Numero {
     public:
         Numero(Cadena num);
-        operator const char*() const {
-            return num_troq_.c_str();
-        }
+        operator const char*() const { return num_troq_.c_str(); }
         
-        bool operator <(const Numero& n) {
+        bool operator <(const Numero& n) const {
             return std::stod(num_troq_.c_str()) < std::stod((const char*)n);
         }
         
@@ -25,7 +24,7 @@ class Numero {
         class Incorrecto {
             public:
                 Incorrecto(Razon z) : z_(z) {}
-                Razon razon() { return z_; }
+                Razon razon() const { return z_; }
             private:
                 Razon z_;
         };
@@ -47,7 +46,7 @@ class Tarjeta {
         Cadena titular_facial() const { return titular_facial_; }
         Usuario* titular() const { return usuario_; }
         
-        bool operator <(const Tarjeta& t);
+        bool operator <(const Tarjeta& t) const;
         
         friend std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Tarjeta& t);
         void anular_titular();

@@ -2,7 +2,6 @@
 #define TARJETA_CPP
 
 #include "tarjeta.hpp"
-#include "luhn.cpp"
 
 Numero::Numero(Cadena num) {
     unsigned i;
@@ -14,8 +13,8 @@ Numero::Numero(Cadena num) {
         throw Incorrecto(DIGITOS);
     if(num.length() < 13 || num.length() > 19)
         throw Incorrecto(LONGITUD);
-    if(!luhn(num))
-        throw Incorrecto(NO_VALIDO);
+    //if(!luhn(num))
+        //throw Incorrecto(NO_VALIDO);
     
     num_troq_ = num;
 }
@@ -32,7 +31,7 @@ void Tarjeta::anular_titular() {
     usuario_ = nullptr;
 }
 
-bool Tarjeta::operator <(const Tarjeta& t) {
+bool Tarjeta::operator <(const Tarjeta& t) const {
     return (numero_ < t.numero());
 }
 

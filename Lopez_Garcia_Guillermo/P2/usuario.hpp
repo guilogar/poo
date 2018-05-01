@@ -19,7 +19,7 @@ class Clave {
         explicit Clave(const char* = "12345");
         Clave(const Clave& c);
         Cadena clave() const { return clave_; };
-        bool verifica(const char*);
+        bool verifica(const char*) const;
         
         friend std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Clave& c);
         enum Razon {CORTA, ERROR_CRYPT};
@@ -50,6 +50,7 @@ class Usuario {
         static Usuarios usuarios_;
         
         Usuario(Cadena ident, Cadena nom, Cadena ape, Cadena direc, Cadena con);
+        Usuario(Cadena ident, Cadena nom, Cadena ape, Cadena direc, Clave con);
         void es_titular_de(Tarjeta& j);
         void no_es_titular_de(Tarjeta& j);
         
@@ -73,7 +74,7 @@ class Usuario {
                 Id_duplicado(Cadena idd) {
                     idd_ = idd;
                 }
-                const Cadena& idd() { return idd_; }
+                Cadena idd() const { return idd_; }
             private:
                 Cadena idd_;
         };

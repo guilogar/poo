@@ -35,7 +35,7 @@ Clave::Clave(const Clave& c) {
     clave_ = c.clave();
 }
 
-bool Clave::verifica(const char* posible_contrasena) {
+bool Clave::verifica(const char* posible_contrasena) const {
     if(const char* const pcc = crypt(posible_contrasena, clave_.c_str()))
         return clave_ == pcc;
     else
@@ -60,6 +60,19 @@ Usuario::Usuario(Cadena ident, Cadena nom, Cadena ape, Cadena direc, Cadena con)
     apellidos_ = ape;
     direccion_ = direc;
     //contrasena_ = Clave(con.c_str());
+}
+
+Usuario::Usuario(Cadena ident, Cadena nom, Cadena ape, Cadena direc, Clave con) {
+    size_t s = std::hash<std::string>{}(ident.c_str());
+    
+    if(! this->usuarios_.insert(s).second)
+        throw Id_duplicado(ident);
+    
+    identificador_ = ident;
+    nombre_ = nom;
+    apellidos_ = ape;
+    direccion_ = direc;
+    //contrasena_ = con
 }
 
 void Usuario::es_titular_de(Tarjeta& j) {
