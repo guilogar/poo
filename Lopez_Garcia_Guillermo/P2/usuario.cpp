@@ -11,7 +11,7 @@ extern "C" {
 #include <random>
 
 Clave::Clave(const char* contrasena) {
-    if(std::strlen(contrasena) < 5) throw Incorrecta(CORTA);
+    if(strlen(contrasena) < 5) throw Incorrecta(CORTA);
     
     static const char *const cvs = "abcdfghijklmnoprstuvwxyz"
                                    "ABCDEFGHIJKLMNOPQRS"
@@ -23,8 +23,10 @@ Clave::Clave(const char* contrasena) {
                     cvs[distribucion.operator()(r)],
                     cvs[distribucion(r)]
                  };
-    if(char* pcc = crypt(contrasena, sal))
+    if(char* pcc = crypt(contrasena, sal)) {
         clave_ = pcc;
+        std::cout << pcc << std::endl;
+    }
     else
         throw Incorrecta(ERROR_CRYPT);
 }
@@ -45,22 +47,23 @@ std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Clave&
     return os;
 }
 
-Usuario::Usuario(Cadena ident, Cadena nom, Cadena ape, Cadena direc, Clave c) {
-    std::hash<std::string>{}(ident.c_str());
+Usuario::Usuarios Usuario::usuarios_;
+
+Usuario::Usuario(Cadena ident, Cadena nom, Cadena ape, Cadena direc, Cadena con) {
+    size_t s = std::hash<std::string>{}(ident.c_str());
     
-    //if(! usuarios_.insert(ident, hash(ident)).second)
-        //throw Id_duplicado(ident);
+    if(! this->usuarios_.insert(s).second)
+        throw Id_duplicado(ident);
     
     identificador_ = ident;
     nombre_ = nom;
     apellidos_ = ape;
     direccion_ = direc;
-    contrasena_ = c;
+    //contrasena_ = Clave(con.c_str());
 }
 
 void Usuario::es_titular_de(Tarjeta& j) {
     tarjetas_.insert(std::make_pair(j.numero(), &j));
-    
 }
 
 void Usuario::no_es_titular_de(Tarjeta& j) {
@@ -87,6 +90,20 @@ std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Usuari
     for (auto& i : u.tarjetas_)
         os << i.first << " " << i.second << std::endl;
     return os;
+}
+
+void mostrar_carro(std::basic_ostream<char>& os, const Usuario& u) {
+    size_t s = std::hash<std::string>{}(u.id().c_str());
+    std::unordered_set<Cadena>::iterator it = u.usuarios_.find(s);
+    
+    if(it != u.usuarios_.end()) {
+        os << "Carrito de la compra de " << u.nombre() << " [Artículos: " << u.n_articulos() << "]" << "Cant. Articulo" << std::endl;
+        os << "=======================================================================================================" << std::endl;
+        
+        for (auto i : u.compra()) {
+            os << i.second << "   " << i.first;
+        }
+    }
 }
 
 #endif

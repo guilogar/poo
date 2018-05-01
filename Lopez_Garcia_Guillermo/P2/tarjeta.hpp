@@ -1,10 +1,11 @@
 #ifndef TARJETA_H
 #define TARJETA_H
 
-#include "../P1/fecha.hpp"
-#include "../P1/cadena.hpp"
+#include "fecha.hpp"
+#include "cadena.hpp"
 #include "usuario.hpp"
 
+#include <locale>
 #include <cstring>
 
 class Usuario;
@@ -36,7 +37,7 @@ class Tarjeta {
     public:
         enum Tipo { VISA, Mastercard, Maestro, JCB, AmericanExpress };
         
-        Tarjeta(Tipo t, Numero n, Usuario *u, Fecha f);
+        Tarjeta(Tipo t, Numero n, Usuario& u, Fecha f);
         Tarjeta(const Tarjeta&) = delete;
         Tarjeta& operator =(const Tarjeta&) = delete;
         
@@ -44,12 +45,12 @@ class Tarjeta {
         Numero numero() const { return numero_; }
         Fecha caducidad() const { return caducidad_; }
         Cadena titular_facial() const { return titular_facial_; }
-        const Usuario* titular() const { return usuario_; }
+        Usuario* titular() const { return usuario_; }
         
         bool operator <(const Tarjeta& t);
         
         friend std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Tarjeta& t);
-        void anular_titular() { usuario_ = nullptr; }
+        void anular_titular();
         
         class Caducada {
             public:

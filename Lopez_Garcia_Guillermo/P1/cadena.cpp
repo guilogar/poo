@@ -1,7 +1,7 @@
-#include "cadena.hpp"
-
 #ifndef CADENA_CPP
 #define CADENA_CPP
+
+#include "cadena.hpp"
 
 // Constructores
 Cadena::Cadena(const char* cad, int tamanio) {

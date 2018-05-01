@@ -1,7 +1,7 @@
-#include "fecha.hpp"
-
 #ifndef FECHA_CPP
 #define FECHA_CPP
+
+#include "fecha.hpp"
 
 const char * Fecha::diasSemana[7] = {"domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"};
 const char * Fecha::meses[12] = {"enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"};

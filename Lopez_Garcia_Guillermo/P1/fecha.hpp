@@ -1,10 +1,10 @@
+#ifndef FECHA_HPP
+#define FECHA_HPP
+
 #include <cstring>
 #include <ctime>
 #include <iostream>
 #include <regex>
-
-#ifndef FECHA_HPP
-#define FECHA_HPP
 
 class Fecha {
     public:

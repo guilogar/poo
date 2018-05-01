@@ -2,11 +2,10 @@
 #define TARJETA_CPP
 
 #include "tarjeta.hpp"
-#include "../luhn.cpp"
-#include <locale>
+#include "luhn.cpp"
 
 Numero::Numero(Cadena num) {
-    int i;
+    unsigned i;
     for (i = 0; i < num.length(); i++)
         if(!std::isdigit(num[i]))
             break;
@@ -21,9 +20,16 @@ Numero::Numero(Cadena num) {
     num_troq_ = num;
 }
 
-Tarjeta::Tarjeta(Tipo t, Numero n, Usuario *u, Fecha f) : tipo_(t), numero_(n), usuario_(u) {
+Tarjeta::Tarjeta(Tipo t, Numero n, Usuario& u, Fecha f) : tipo_(t), numero_(n) {
     if(f < Fecha())
         throw Caducada(f);
+    usuario_ = &u;
+    caducidad_ = f;
+    titular_facial_ = u.nombre() + " " + u.apellidos();
+}
+
+void Tarjeta::anular_titular() {
+    usuario_ = nullptr;
 }
 
 bool Tarjeta::operator <(const Tarjeta& t) {
@@ -32,10 +38,7 @@ bool Tarjeta::operator <(const Tarjeta& t) {
 
 Tarjeta::~Tarjeta() {
     if(usuario_ != nullptr) usuario_->no_es_titular_de(*this);
-    usuario_->~Usuario();
-    numero_.~Numero();
-    caducidad_.~Fecha();
-    titular_facial_.~Cadena();
+    usuario_ = nullptr;
 }
 
 std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Tarjeta::Tipo& t) {

@@ -1,8 +1,8 @@
 #ifndef USUARIO_H
 #define USUARIO_H
 
-#include "../P1/fecha.hpp"
-#include "../P1/cadena.hpp"
+#include "fecha.hpp"
+#include "cadena.hpp"
 #include "tarjeta.hpp"
 #include "articulo.hpp"
 
@@ -16,7 +16,7 @@ class Numero;
 
 class Clave {
     public:
-        explicit Clave(const char* = "");
+        explicit Clave(const char* = "12345");
         Clave(const Clave& c);
         Cadena clave() const { return clave_; };
         bool verifica(const char*);
@@ -26,6 +26,7 @@ class Clave {
         class Incorrecta {
             public:
                 Incorrecta(Razon z) : z_(z) { }
+                Razon razon() const { return z_; }
             private:
                 Razon z_;
         };
@@ -48,7 +49,7 @@ class Usuario {
         typedef std::unordered_set<Cadena> Usuarios;
         static Usuarios usuarios_;
         
-        Usuario(Cadena ident, Cadena nom, Cadena ape, Cadena direc, Clave c);
+        Usuario(Cadena ident, Cadena nom, Cadena ape, Cadena direc, Cadena con);
         void es_titular_de(Tarjeta& j);
         void no_es_titular_de(Tarjeta& j);
         
@@ -66,8 +67,6 @@ class Usuario {
         Usuario& operator =(Usuario&& u) = delete;
         
         friend std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Usuario& u);
-        
-        ~Usuario();
         
         class Id_duplicado {
             public:
@@ -88,5 +87,6 @@ class Usuario {
         Articulos articulos_;
 };
 
+void mostrar_carro(std::basic_ostream<char>&, const Usuario&);
 
 #endif

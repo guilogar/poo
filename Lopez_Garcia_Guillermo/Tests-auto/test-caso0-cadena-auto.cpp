@@ -121,13 +121,6 @@ FCTMF_SUITE_BGN(test_cadena) {
   }
   FCT_TEST_END();
 
-  FCT_TEST_BGN(Cadena - Observadora: c_str()) {
-    const Cadena a, b("La avaricia rompe el saco");
-    fct_chk_eq_str(a.c_str(), "");
-    fct_chk_eq_str(b.c_str(), "La avaricia rompe el saco");
-  }
-  FCT_TEST_END();
-
   FCT_TEST_BGN(Cadena - Concatenacion: con +=) {
     Cadena a("Inglés,");
     a += Cadena(" pirata es");
@@ -417,36 +410,11 @@ FCTMF_SUITE_BGN(test_cadena) {
     fct_chk(a.end() == a.c_str() + 4);
   }
   FCT_TEST_END();
- FCT_TEST_BGN(Cadena - Iterador: cbegin()) {
-    const Cadena a("hola");
-    fct_chk(a.cbegin() == a.c_str());
-  }
-  FCT_TEST_END();
-
-  FCT_TEST_BGN(Cadena - Iterador: cend()) {
-    const Cadena a("hola");
-    fct_chk(a.cend() == a.c_str() + 4);
-  }
-  FCT_TEST_END();
 
   FCT_TEST_BGN(Cadena - Iterador: rbegin()/rend()) {
     Cadena a("hola");
-    *a.rbegin() = 'o';
-    *a.rend().base() = ' ';
-    fct_chk(*a.rbegin() == 'o');
-    fct_chk(*a.rend().base() == ' ');
-  } FCT_TEST_END();
-
-  FCT_TEST_BGN(Cadena - Iterador: rbegin()/rend() const) {
-    const Cadena a("hola");
     fct_chk(*a.rbegin() == 'a');
     fct_chk(*a.rend().base() == 'h');
-  } FCT_TEST_END();
-
-  FCT_TEST_BGN(Cadena - Iterador: crbegin()/crend()) {
-    const Cadena a("hola");
-    fct_chk(*a.crbegin() == 'a');
-    fct_chk(*a.crend().base() == 'h');
   } FCT_TEST_END();
 
   FCT_TEST_BGN(Cadena - Iteradores: recorridos directos) {
@@ -474,8 +442,7 @@ FCTMF_SUITE_BGN(test_cadena) {
     for (Cadena::const_reverse_iterator r = a.rbegin(); r != a.rend(); ++r)
       os << *r;
     fct_chk(os.str() == "bmpialoh");
-    for (auto r = a.crbegin(); r != a.crend(); ++r) 
-      os << *r;
+    for (auto r = a.crbegin(); r != a.crend(); ++r) os << *r;
     fct_chk(os.str() == "bmpialohaloh");
   }
   FCT_TEST_END();

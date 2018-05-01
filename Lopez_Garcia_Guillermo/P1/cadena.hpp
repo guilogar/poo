@@ -1,11 +1,11 @@
+#ifndef CADENA_HPP
+#define CADENA_HPP
+
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <iterator>
-
-#ifndef CADENA_HPP
-#define CADENA_HPP
 
 class Cadena {
     public:

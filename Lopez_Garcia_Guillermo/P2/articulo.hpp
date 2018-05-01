@@ -1,8 +1,8 @@
 #ifndef ARTICULO_H
 #define ARTICULO_H
 
-#include "../P1/fecha.cpp"
-#include "../P1/cadena.cpp"
+#include "fecha.hpp"
+#include "cadena.hpp"
 
 class Articulo {
     public:

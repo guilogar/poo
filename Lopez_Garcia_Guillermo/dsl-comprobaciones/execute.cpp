@@ -350,7 +350,8 @@ bool execute::checkDefArgs(const FunctionDecl* function, unsigned int numDefArgs
 				if(!checkWithoutParams(defArgs)){
 
 					string dfarg = Rewrite.getRewrittenText(function->getParamDecl(p)->getDefaultArg()->getSourceRange());
-					if(dfarg != defArgs[indexDefArgs]){
+					//if(dfarg != defArgs[indexDefArgs]){
+					if(!checkRegularExpresion(dfarg, defArgs[indexDefArgs])){
 						res = false;
 						break;
 					}
@@ -1408,7 +1409,6 @@ void execute::classWithVariableMembersAccessLevel(const MatchFinder::MatchResult
     const FieldDecl *foundMember = Result.Nodes.getNodeAs<clang::FieldDecl>("foundMemberVariableAccessLevel");
 
     if (existClass(foundClass) && existMember(foundMember)){
-		llvm::outs() << foundMember->getNameAsString() << "\n";
         for (AI it=variableMembersAccessLevel.begin(); it!=variableMembersAccessLevel.end(); ++it){
         	if(std::regex_match(foundMember->getNameAsString(), std::regex(it->first)) &&
                 std::regex_match(foundClass->getNameAsString(), std::regex((it->second).getClass()))){

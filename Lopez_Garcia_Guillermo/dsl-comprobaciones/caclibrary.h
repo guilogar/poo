@@ -131,7 +131,7 @@ class checkCode : public MatchFinder::MatchCallback{
   regular exprression. This is mainly useful when the name of the element
   to be searched is not fixed.
 
-  For expalme, if "A.*" is set as the name of a class, the check will apply to all the
+  For example, if "A.*" is set as the name of a class, the check will apply to all the
   classes whose name starts with "A".
 
   In the descriptions of the checks in this file, this property is indicated with (*).
@@ -228,7 +228,7 @@ class checkCode : public MatchFinder::MatchCallback{
 - Parameters:
 ---string className (*): string with the name of the class to be searched.
 ---vector<string> parameters (?): vector of strings with the types of the parameters of the constructor.
----vector<string> initializers (?): vector of strings with the types of the attributes that are initialized in the initializer list of the constructor.
+---vector<string> initializers (?): vector of strings with the types of the attributes that are initialized in the initializer list of the constructor (the order of the initilizers is unimportant).
 
 - Example:
 
@@ -488,7 +488,7 @@ class checkCode : public MatchFinder::MatchCallback{
 ****************************************************************************/
 
 /*
-- Method: void memberVariable(string className, vector<string> memberNames, vector<string> constant, string message)
+- Method: void memberVariable(string className, vector<string> memberNames, vector<string> constant, vector<bool> exist, string message)
 
 - Utility: Method to verify if a class has an attribute.
 
@@ -496,6 +496,7 @@ Parameters:
 ---string className (*): string with the name of the class to be searched.
 ---vector<string> memberName (*): vector of strings with the names of the attributes to be searched.
 ---vector<string> constant (?): vector of strings indicating wheter the attributes are constant or not.
+---vector<bool> exist: vector of boolean indicating the existence of the attributes.
 
 - Example:
 
@@ -504,10 +505,10 @@ Parameters:
 		const Type b;
 	};
 
-	memberVariable("A", {"a", "b"}, {"noconst", "const"}); 	Pass
-	memberVariable("A", {"a", "b"}, {"?", "?"});		Pass
-	memberVariable("A", {"c"}, {"?"}); 			Fail
-	memberVariable("A", {"a"}, {"const"});			Fail
+	memberVariable("A", {"a", "b"}, {"noconst", "const"}, {true, true}); 	Pass
+	memberVariable("A", {"a", "b"}, {"?", "?"}, {false, false});		Fail
+	memberVariable("A", {"c"}, {"?"}, {true}); 				Fail
+	memberVariable("A", {"a"}, {"const"}, {true});				Fail
 
 */
 	void memberVariable(string className, vector<string> memberNames, vector<string> constant, vector<bool> exist, string message = "MEMBER VARIABLE NOT FOUND.");
@@ -802,18 +803,18 @@ Parameters:
 ---string className (*): string with the name of the class where the methods have to be searched.
 ---vector<string> constant (?): vector of strings indicating whether the methods are constant or not.
 ---vector<unsigned int> numDefaultArgs: vector of integers indicating the number of default arguments that the methods should have.
----vector<vector<string> > defaultArgs: vector of vector of strings indicating the default arguments.
+---vector<vector<string> > defaultArgs (*, ?): vector of vector of strings indicating the default arguments.
 
 - Example:
 
 	class A{
-		void method1(Type1 a=0) { ... }
-		void method2(Type1, Type2=0) { ... }
+		void method1(Type1 a = 0) { ... }
+		void method2(Type1 a, Type2 b = 0.0) { ... }
 	};
 
 	defaultArgumentsInMethod({"method1"}, {{"Type1"}}, "A", {"?"}, {1});                   Pass
 	defaultArgumentsInMethod({"method2"}, {{"Type1", "Type2"}}, "A", {"?"}, {2});          Fail
-	defaultArgumentsInMethod({"method2"}, {{"Type1", "Type2"}}, "A", {"?"}, {1}, {"0"});   Pass
+	defaultArgumentsInMethod({"method2"}, {{"Type1", "Type2"}}, "A", {"?"}, {1}, {"0.*"}); Pass
 	defaultArgumentsInMethod({"method2"}, {{"Type1", "Type2"}}, "A", {"?"}, {1}, {"?"});   Pass
 
 */
