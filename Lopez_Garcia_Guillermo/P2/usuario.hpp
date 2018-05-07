@@ -60,15 +60,19 @@ class Usuario {
         Cadena direccion() const { return direccion_; }
         
         void compra(Articulo& a, unsigned id = 1);
+        
         const Tarjetas& tarjetas() const { return tarjetas_; }
         const Articulos& compra() const { return articulos_; }
+        const Tarjetas& tarjetas() { return tarjetas_; }
+        const Articulos& compra() { return articulos_; }
+        
         size_t n_articulos() const;
         
         Usuario& operator =(const Usuario& u) = delete;
         Usuario& operator =(Usuario&& u) = delete;
         
         friend std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Usuario& u);
-        
+        ~Usuario();
         class Id_duplicado {
             public:
                 Id_duplicado(Cadena idd) : idd_(idd) { }

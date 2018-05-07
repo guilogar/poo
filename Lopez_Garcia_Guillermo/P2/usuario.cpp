@@ -60,8 +60,10 @@ Usuario::Usuario(Cadena ident, Cadena nom, Cadena ape, Cadena direc, Cadena con)
 }
 
 Usuario::Usuario(Cadena ident, Cadena nom, Cadena ape, Cadena direc, Clave con) {
-    //if(! this->usuarios_.insert(ident).second)
-        //throw Id_duplicado(ident);
+    /*
+     *if(! this->usuarios_.insert(ident).second)
+     *    throw Id_duplicado(ident);
+     */
     
     identificador_ = ident;
     nombre_ = nom;
@@ -71,16 +73,16 @@ Usuario::Usuario(Cadena ident, Cadena nom, Cadena ape, Cadena direc, Clave con) 
 }
 
 void Usuario::es_titular_de(Tarjeta& j) {
-    if(j.titular() == nullptr || j.titular() == this)
-        tarjetas_.insert(std::make_pair(j.numero(), &j));
+    if((j.titular() == nullptr || j.titular() == this)) {
+        Tarjetas::iterator it = tarjetas_.begin();
+        tarjetas_.insert(it, std::make_pair(j.numero(), &j));
+    }
 }
 
 void Usuario::no_es_titular_de(Tarjeta& j) {
-    for(auto &i : tarjetas_)
-        if(i.second->numero() == j.numero()) {
-            j.anular_titular();
+    for(auto i : tarjetas_)
+        if (i.first.num() == j.numero().num()) {
             tarjetas_.erase(i.first);
-            break;
         }
 }
 
@@ -90,6 +92,15 @@ void Usuario::compra(Articulo& a, unsigned can) {
 
 size_t Usuario::n_articulos() const {
     return articulos_.size();
+}
+
+Usuario::~Usuario() {
+    for(auto i : tarjetas_)
+        i.second->anular_titular();
+    /*
+     *for(auto i : tarjetas_)
+     *    no_es_titular_de(*i.second);
+     */
 }
 
 std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Usuario& u) {

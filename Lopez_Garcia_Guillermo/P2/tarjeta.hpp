@@ -19,6 +19,7 @@ class Numero {
         bool operator <(const Numero& n) const {
             return std::stod(num_troq_.c_str()) < std::stod((const char*)n);
         }
+        Cadena num() const {return num_troq_; }
         
         enum Razon { LONGITUD, DIGITOS, NO_VALIDO };
         class Incorrecto {
