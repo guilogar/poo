@@ -33,6 +33,7 @@ class Cadena {
         Cadena operator +(const Cadena& c);
         Cadena operator +(const Cadena& c) const;
         Cadena& operator +=(const Cadena& c);
+        Cadena& operator +=(const char&);
         
         friend bool operator ==(const Cadena& p, const Cadena& c);
         friend bool operator !=(const Cadena& p, const Cadena& c);

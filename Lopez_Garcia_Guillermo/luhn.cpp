@@ -3,6 +3,10 @@
 // Referencias: 
 //              http://en.wikipedia.org/wiki/Luhn_algorithm
 //
+
+#ifndef LUHN_CPP
+#define LUHN_CPP
+
 #include "cadena.hpp"
 #include <cstddef>
 
@@ -23,3 +27,5 @@ bool luhn(const Cadena& numero)
   }
   return !(suma % 10);
 }
+
+#endif

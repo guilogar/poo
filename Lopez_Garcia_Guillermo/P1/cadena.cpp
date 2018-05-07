@@ -29,15 +29,9 @@ Cadena::Cadena(int tamanio, const char caracter) {
 }
 
 Cadena::Cadena(const char* cad) {
-    int tamanio = 0;
-    cad_ = new char[strlen(cad)];
-    
-    while (cad[tamanio] != '\0') {
-        cad_[tamanio] = cad[tamanio];
-        tamanio++;
-    }
-    tamanio_ = tamanio;
-    cad_[tamanio_] = '\0';
+    tamanio_ = strlen(cad);
+    cad_ = new char[tamanio_ + 1];
+    strcpy(cad_, cad);
 }
 
 Cadena::Cadena(int tamanio) {
@@ -177,6 +171,21 @@ Cadena& Cadena::operator +=(const Cadena& c) {
     
     strcpy(cad_, cc);
     strcat(cad_, c.c_str());
+    
+    return *this;
+}
+
+Cadena& Cadena::operator +=(const char& c) {
+    char* cc = new char[tamanio_ + 1];
+    strcpy(cc, cad_);
+    
+    tamanio_ += 1;
+    delete[] cad_;
+    cad_ = new char[tamanio_ + 1];
+    
+    strcpy(cad_, cc);
+    char* cad = new char[2]; cad[0] = c; cad[1] = '\0';
+    strcat(cad_, cad);
     
     return *this;
 }
