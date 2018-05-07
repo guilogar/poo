@@ -25,7 +25,6 @@ Clave::Clave(const char* contrasena) {
                  };
     if(char* pcc = crypt(contrasena, sal)) {
         clave_ = pcc;
-        std::cout << pcc << std::endl;
     }
     else
         throw Incorrecta(ERROR_CRYPT);
@@ -50,29 +49,25 @@ std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Clave&
 Usuario::Usuarios Usuario::usuarios_;
 
 Usuario::Usuario(Cadena ident, Cadena nom, Cadena ape, Cadena direc, Cadena con) {
-    size_t s = std::hash<std::string>{}(ident.c_str());
-    
-    if(! this->usuarios_.insert(s).second)
+    if(! this->usuarios_.insert(ident).second)
         throw Id_duplicado(ident);
     
     identificador_ = ident;
     nombre_ = nom;
     apellidos_ = ape;
     direccion_ = direc;
-    //contrasena_ = Clave(con.c_str());
+    contrasena_ = Clave(con.c_str()).clave();
 }
 
 Usuario::Usuario(Cadena ident, Cadena nom, Cadena ape, Cadena direc, Clave con) {
-    size_t s = std::hash<std::string>{}(ident.c_str());
-    
-    if(! this->usuarios_.insert(s).second)
-        throw Id_duplicado(ident);
+    //if(! this->usuarios_.insert(ident).second)
+        //throw Id_duplicado(ident);
     
     identificador_ = ident;
     nombre_ = nom;
     apellidos_ = ape;
     direccion_ = direc;
-    //contrasena_ = con
+    contrasena_ = con.clave();
 }
 
 void Usuario::es_titular_de(Tarjeta& j) {
@@ -101,20 +96,19 @@ std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Usuari
     os << u.direccion_ << std::endl;
     os << "Tarjetas: " << std::endl;
     for (auto& i : u.tarjetas_)
-        os << i.first << " " << i.second << std::endl;
+        os << i.first << " " << *i.second << std::endl;
     return os;
 }
 
 void mostrar_carro(std::basic_ostream<char>& os, const Usuario& u) {
-    size_t s = std::hash<std::string>{}(u.id().c_str());
-    std::unordered_set<Cadena>::iterator it = u.usuarios_.find(s);
+    std::unordered_set<Cadena>::iterator it = u.usuarios_.find(u.id());
     
     if(it != u.usuarios_.end()) {
-        os << "Carrito de la compra de " << u.nombre() << " [Artículos: " << u.n_articulos() << "]" << "Cant. Articulo" << std::endl;
+        os << "Carrito de la compra de " << u.nombre() << " [Artículos: " << u.n_articulos() << "] " << "Cant. Articulo" << std::endl;
         os << "=======================================================================================================" << std::endl;
         
         for (auto i : u.compra()) {
-            os << i.second << "   " << i.first;
+            os << i.second << "   " << *i.first << std::endl;
         }
     }
 }

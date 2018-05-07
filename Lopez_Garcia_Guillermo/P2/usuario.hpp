@@ -16,7 +16,7 @@ class Numero;
 
 class Clave {
     public:
-        explicit Clave(const char* = "12345");
+        explicit Clave(const char* = "");
         Clave(const Clave& c);
         Cadena clave() const { return clave_; };
         bool verifica(const char*) const;
@@ -71,9 +71,7 @@ class Usuario {
         
         class Id_duplicado {
             public:
-                Id_duplicado(Cadena idd) {
-                    idd_ = idd;
-                }
+                Id_duplicado(Cadena idd) : idd_(idd) { }
                 Cadena idd() const { return idd_; }
             private:
                 Cadena idd_;
@@ -83,7 +81,7 @@ class Usuario {
         Cadena nombre_;
         Cadena apellidos_;
         Cadena direccion_;
-        Clave contrasena_;
+        Cadena contrasena_;
         Tarjetas tarjetas_;
         Articulos articulos_;
 };

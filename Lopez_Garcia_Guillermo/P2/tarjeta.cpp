@@ -5,18 +5,23 @@
 
 Numero::Numero(Cadena num) {
     unsigned i;
+    Cadena number;
+    
     for (i = 0; i < num.length(); i++)
-        if(!std::isdigit(num[i]))
+        if(num[i] != ' ' && std::isdigit(num[i]))
+            number += num[i];
+    for (i = 0; i < number.length(); i++)
+        if(!std::isdigit(number[i]))
             break;
     
-    if(i < num.length())
+    if(!luhn(number))
+        throw Incorrecto(NO_VALIDO);
+    if(i < number.length())
         throw Incorrecto(DIGITOS);
-    if(num.length() < 13 || num.length() > 19)
+    if(number.length() < 13 || number.length() > 18)
         throw Incorrecto(LONGITUD);
-    //if(!luhn(num))
-        //throw Incorrecto(NO_VALIDO);
     
-    num_troq_ = num;
+    num_troq_ = number;
 }
 
 Tarjeta::Tarjeta(Tipo t, Numero n, Usuario& u, Fecha f) : tipo_(t), numero_(n) {
@@ -57,7 +62,11 @@ std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Tarjet
     os << t.tipo_ << std::endl;
     os << t.numero_ << std::endl;
     os << t.titular_facial_ << std::endl;
-    os << "Caduca: " << t.caducidad_.mes() << "/" << t.caducidad_.anno() << std::endl;
+    os << "Caduca: ";
+    
+    if(t.caducidad_.mes() < 10) os << "0";
+    os << t.caducidad_.mes() << "/" << (t.caducidad_.anno() % 100);
+    
     return os;
 }
 

@@ -4,7 +4,7 @@
 #include "fecha.hpp"
 #include "cadena.hpp"
 #include "usuario.hpp"
-//#include "../luhn.cpp"
+#include "../luhn.hpp"
 
 #include <locale>
 #include <cstring>
