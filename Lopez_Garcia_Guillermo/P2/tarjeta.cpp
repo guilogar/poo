@@ -26,12 +26,12 @@ Numero::Numero(Cadena num) {
 }
 
 Tarjeta::Tarjeta(Tipo t, Numero n, Usuario& u, Fecha f) : tipo_(t), numero_(n) {
-    if(f < Fecha())
-        throw Caducada(f);
-    usuario_ = &u;
+    if(f < Fecha()) throw Caducada(f);
+    
     caducidad_ = f;
     titular_facial_ = u.nombre() + " " + u.apellidos();
     
+    usuario_ = &u;
     usuario_->es_titular_de(*this);
 }
 
@@ -55,10 +55,11 @@ std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Tarjet
         case Tarjeta::Tipo::Maestro: os << "Maestro"; break;
         case Tarjeta::Tipo::JCB: os << "JCB"; break;
         case Tarjeta::Tipo::AmericanExpress: os << "AmericanExpress"; break;
-        default:
-            os << "Error";
+        
+        default: os << "Error";
     }
-    return os   ;
+    
+    return os;
 }
 
 std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Tarjeta& t) {

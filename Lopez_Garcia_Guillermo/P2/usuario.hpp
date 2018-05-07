@@ -68,6 +68,8 @@ class Usuario {
         
         size_t n_articulos() const;
         
+        Usuario(const Usuario& u) = delete;
+        Usuario(Usuario&& u) = delete;
         Usuario& operator =(const Usuario& u) = delete;
         Usuario& operator =(Usuario&& u) = delete;
         

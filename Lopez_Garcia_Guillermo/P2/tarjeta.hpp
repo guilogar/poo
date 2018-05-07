@@ -19,7 +19,6 @@ class Numero {
         bool operator <(const Numero& n) const {
             return std::stod(num_troq_.c_str()) < std::stod((const char*)n);
         }
-        Cadena num() const {return num_troq_; }
         
         enum Razon { LONGITUD, DIGITOS, NO_VALIDO };
         class Incorrecto {
@@ -46,11 +45,10 @@ class Tarjeta {
         Fecha caducidad() const { return caducidad_; }
         Cadena titular_facial() const { return titular_facial_; }
         Usuario* titular() const { return usuario_; }
+        void anular_titular();
         
         bool operator <(const Tarjeta& t) const;
-        
         friend std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Tarjeta& t);
-        void anular_titular();
         
         class Caducada {
             public:
@@ -59,6 +57,7 @@ class Tarjeta {
             private:
                 Fecha f_;
         };
+        
         ~Tarjeta();
     private:
         Tipo tipo_;

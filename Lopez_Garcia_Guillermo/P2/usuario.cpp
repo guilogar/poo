@@ -80,7 +80,7 @@ void Usuario::es_titular_de(Tarjeta& j) {
 
 void Usuario::no_es_titular_de(Tarjeta& j) {
     for(auto i : tarjetas_)
-        if (i.first.num() == j.numero().num())
+        if (strcmp(i.first, j.numero()) == 0)
             tarjetas_.erase(i.first);
 }
 
