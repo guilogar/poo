@@ -71,16 +71,17 @@ Usuario::Usuario(Cadena ident, Cadena nom, Cadena ape, Cadena direc, Clave con) 
 }
 
 void Usuario::es_titular_de(Tarjeta& j) {
-    tarjetas_.insert(std::make_pair(j.numero(), &j));
+    if(j.titular() == nullptr || j.titular() == this)
+        tarjetas_.insert(std::make_pair(j.numero(), &j));
 }
 
 void Usuario::no_es_titular_de(Tarjeta& j) {
-    for(auto i : tarjetas_) {
-        if(i.second == &j) {
-            tarjetas_.erase(i.first); j.anular_titular();
+    for(auto &i : tarjetas_)
+        if(i.second->numero() == j.numero()) {
+            j.anular_titular();
+            tarjetas_.erase(i.first);
             break;
         }
-    }
 }
 
 void Usuario::compra(Articulo& a, unsigned can) {
@@ -108,7 +109,7 @@ void mostrar_carro(std::basic_ostream<char>& os, const Usuario& u) {
         os << "=======================================================================================================" << std::endl;
         
         for (auto i : u.compra()) {
-            os << i.second << "   " << *i.first << std::endl;
+            os << i.second << " " << *i.first << std::endl;
         }
     }
 }

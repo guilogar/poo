@@ -41,8 +41,15 @@ bool Tarjeta::operator <(const Tarjeta& t) const {
 }
 
 Tarjeta::~Tarjeta() {
-    if(usuario_ != nullptr) usuario_->no_es_titular_de(*this);
+    usuario_->no_es_titular_de(*this);
     usuario_ = nullptr;
+    /*
+     *if(usuario_ != nullptr){
+     *    std::cout << usuario_->nombre() << std::endl;
+     *    //usuario_->no_es_titular_de(*this);
+     *    //usuario_ = nullptr;
+     *}
+     */
 }
 
 std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Tarjeta::Tipo& t) {
