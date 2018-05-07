@@ -12,7 +12,13 @@ Articulo::Articulo(Cadena cod, Cadena tit, Fecha f, double pr, int num) {
 }
 
 std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Articulo& a) {
-    os << "[" << a.cod_referencia_ << "] " << "\"" << a.titulo_ << "\", " << a.f_publi_.anno() << ". " << a.precio_ << " €" << std::endl;
+    char* precio_str = new char[3];
+    sprintf(precio_str, "%.2f", a.precio_);
+    
+    os << "[" << a.cod_referencia_ << "] " << "\"" << a.titulo_ << "\", ";
+    os << a.f_publi_.anno() << ". " << precio_str << " €";
+    os << std::endl;
+    
     return os;
 }
 

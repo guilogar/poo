@@ -60,10 +60,8 @@ Usuario::Usuario(Cadena ident, Cadena nom, Cadena ape, Cadena direc, Cadena con)
 }
 
 Usuario::Usuario(Cadena ident, Cadena nom, Cadena ape, Cadena direc, Clave con) {
-    /*
-     *if(! this->usuarios_.insert(ident).second)
-     *    throw Id_duplicado(ident);
-     */
+    if(! usuarios_.insert(ident).second)
+        throw Id_duplicado(ident);
     
     identificador_ = ident;
     nombre_ = nom;
@@ -74,20 +72,26 @@ Usuario::Usuario(Cadena ident, Cadena nom, Cadena ape, Cadena direc, Clave con) 
 
 void Usuario::es_titular_de(Tarjeta& j) {
     if((j.titular() == nullptr || j.titular() == this)) {
-        Tarjetas::iterator it = tarjetas_.begin();
-        tarjetas_.insert(it, std::make_pair(j.numero(), &j));
+        //Tarjetas::iterator it = tarjetas_.begin();
+        //tarjetas_.insert(it, std::make_pair(j.numero(), &j));
+        tarjetas_.insert(std::make_pair(j.numero(), &j));
     }
 }
 
 void Usuario::no_es_titular_de(Tarjeta& j) {
     for(auto i : tarjetas_)
-        if (i.first.num() == j.numero().num()) {
+        if (i.first.num() == j.numero().num())
             tarjetas_.erase(i.first);
-        }
 }
 
-void Usuario::compra(Articulo& a, unsigned can) {
-    articulos_.insert(std::make_pair(&a, can));
+void Usuario::compra(Articulo& a, unsigned cant) {
+    Articulos::iterator it = articulos_.find(&a);
+    if(it == articulos_.end())
+        articulos_.insert(std::make_pair(&a, cant));
+    else {
+        if(cant == 0) articulos_.erase(it);
+        else it->second = cant;
+    }
 }
 
 size_t Usuario::n_articulos() const {
@@ -97,31 +101,29 @@ size_t Usuario::n_articulos() const {
 Usuario::~Usuario() {
     for(auto i : tarjetas_)
         i.second->anular_titular();
-    /*
-     *for(auto i : tarjetas_)
-     *    no_es_titular_de(*i.second);
-     */
+    usuarios_.erase(usuarios_.find(identificador_));
 }
 
 std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Usuario& u) {
     os << u.identificador_ << " " << u.contrasena_ << " " << u.nombre_ << " " << u.apellidos_ << std::endl;
     os << u.direccion_ << std::endl;
     os << "Tarjetas: " << std::endl;
+    
     for (auto& i : u.tarjetas_)
         os << i.first << " " << *i.second << std::endl;
+    
     return os;
 }
 
 void mostrar_carro(std::basic_ostream<char>& os, const Usuario& u) {
-    std::unordered_set<Cadena>::iterator it = u.usuarios_.find(u.id());
+    Usuario::Usuarios::iterator it = u.usuarios_.find(u.id());
     
     if(it != u.usuarios_.end()) {
-        os << "Carrito de la compra de " << u.nombre() << " [Artículos: " << u.n_articulos() << "] " << "Cant. Articulo" << std::endl;
+        os << "Carrito de la compra de " << u.id() << " [Artículos: " << u.n_articulos() << "] " << "Cant. Articulo" << std::endl;
         os << "=======================================================================================================" << std::endl;
         
-        for (auto i : u.compra()) {
-            os << i.second << " " << *i.first << std::endl;
-        }
+        for (auto i : u.compra())
+            os << *i.first << std::endl;
     }
 }
 

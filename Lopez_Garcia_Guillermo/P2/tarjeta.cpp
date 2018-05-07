@@ -8,18 +8,19 @@ Numero::Numero(Cadena num) {
     Cadena number;
     
     for (i = 0; i < num.length(); i++)
-        if(num[i] != ' ' && std::isdigit(num[i]))
-            number += num[i];
+        if(num[i] != ' ' && std::isdigit(num[i])) number += num[i];
+    
     for (i = 0; i < number.length(); i++)
-        if(!std::isdigit(number[i]))
-            break;
+        if(!std::isdigit(number[i])) break;
+    
+    if(num[i] != ' ' && num[i] != '\0' && !std::isdigit(num[i]))
+        throw Incorrecto(DIGITOS);
+    
+    if(number.length() < 13 || number.length() > 19)
+        throw Incorrecto(LONGITUD);
     
     if(!luhn(number))
         throw Incorrecto(NO_VALIDO);
-    if(i < number.length())
-        throw Incorrecto(DIGITOS);
-    if(number.length() < 13 || number.length() > 18)
-        throw Incorrecto(LONGITUD);
     
     num_troq_ = number;
 }
