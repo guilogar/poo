@@ -105,11 +105,11 @@ Usuario::~Usuario() {
 }
 
 std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Usuario& u) {
-    os << u.identificador_ << " " << u.contrasena_ << " " << u.nombre_ << " " << u.apellidos_ << std::endl;
-    os << u.direccion_ << std::endl;
+    os << u.id() << " " << u.contrasena_ << " " << u.nombre() << " " << u.apellidos() << std::endl;
+    os << u.direccion() << std::endl;
     os << "Tarjetas: " << std::endl;
     
-    for (auto& i : u.tarjetas_)
+    for (auto& i : u.tarjetas())
         os << i.first << " " << *i.second << std::endl;
     
     return os;

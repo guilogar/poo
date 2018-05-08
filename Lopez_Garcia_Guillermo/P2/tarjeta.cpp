@@ -63,13 +63,13 @@ std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Tarjet
 }
 
 std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Tarjeta& t) {
-    os << t.tipo_ << std::endl;
-    os << t.numero_ << std::endl;
-    os << t.titular_facial_ << std::endl;
+    os << t.tipo() << std::endl;
+    os << t.numero() << std::endl;
+    os << t.titular_facial() << std::endl;
     os << "Caduca: ";
     
-    if(t.caducidad_.mes() < 10) os << "0";
-    os << t.caducidad_.mes() << "/" << (t.caducidad_.anno() % 100);
+    if(t.caducidad().mes() < 10) os << "0";
+    os << t.caducidad().mes() << "/" << (t.caducidad().anno() % 100);
     
     return os;
 }
