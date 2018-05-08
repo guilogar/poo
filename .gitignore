@@ -1,4 +1,6 @@
 *.zip
+*.tar
+*.tar.gz
 *.out
 *.o
 core
