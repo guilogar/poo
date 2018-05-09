@@ -2,7 +2,7 @@
 #include "usuario-pedido.hpp"
 
 void Usuario_Pedido::asocia(const Usuario& u, const Pedido& p) {
-    asocia(p, u);
+    this->asocia(p, u);
 }
 
 void Usuario_Pedido::asocia(const Pedido& p, const Usuario& u) {
@@ -21,6 +21,7 @@ void Usuario_Pedido::asocia(const Pedido& p, const Usuario& u) {
 const Usuario_Pedido::Pedidos Usuario_Pedido::pedidos(const Usuario& u) const {
     return usuarios_.find(&u);
 }
+
 Usuario& Usuario_Pedido::cliente(const Pedido& p) const {
     return pedidos_.find(&p)->*(usuario);
 }

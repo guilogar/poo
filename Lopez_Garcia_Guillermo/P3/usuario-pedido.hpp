@@ -1,11 +1,12 @@
 #ifndef Usuario_Pedido_H
 #define Usuario_Pedido_H
 
-#include "articulo.hpp"
 #include "pedido.hpp"
 #include "usuario.hpp"
 #include <set>
 #include <map>
+
+class Pedido;
 
 class Usuario_Pedido {
     public:

@@ -6,17 +6,20 @@
 #include "usuario.hpp"
 #include "articulo.hpp"
 #include "tarjeta.hpp"
-#include "Pedido_Usuario.hpp"
-#include "Pedido_Articulo.hpp"
+#include "usuario-pedido.hpp"
+#include "pedido-articulo.hpp"
 
 #include <map>
+
+class Pedido_Articulo;
+class Usuario_Pedido;
 
 class Pedido {
     public:
         static int N_pedidos;
         
         Pedido(Usuario_Pedido& usuario_pedido, Pedido_Articulo& pedido_articulo,
-               Usuario& u, const Tarjeta& t, const Fecha& fp);
+               Usuario& u, const Tarjeta& t, const Fecha& fp = Fecha());
         
         const Tarjeta* tarjeta() { return tarjeta_; }
         
@@ -24,34 +27,34 @@ class Pedido {
         const Tarjeta* tarjeta() const { return tarjeta_; }
         Fecha fecha() const { return fecha_; }
         double total() const { return total_; }
-        int n_total_pedidos() const { return N_pedidos; }
+        static int n_total_pedidos() { return N_pedidos; }
         
         friend std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Pedido& p);
         
         class Vacio {
             public:
-                Vacio(Usuario& u) : u_(u) {}
+                Vacio(Usuario& u) : u_(&u) {}
                 Usuario usuario() const { return u_; }
             private:
-                Usuario u_;
+                Usuario* u_;
         };
         class Impostor {
             public:
-                Impostor(Usuario& u) : u_(u) {}
+                Impostor(Usuario& u) : u_(&u) {}
                 Usuario usuario() const { return u_; }
             private:
-                Usuario u_;
+                Usuario* u_;
         };
         class SinStock {
             public:
-                SinStock(Usuario& u) : u_(u) {}
-                Usuario usuario() const { return u_; }
+                SinStock(Articulo& a) : a_(a) {}
+                Articulo articulo() const { return a_; }
             private:
-                Usuario u_;
+                Articulo a_;
         };
     private:
         int num_;
-        Tarjeta* tarjeta_;
+        const Tarjeta* tarjeta_;
         Fecha fecha_;
         double total_;
 };
