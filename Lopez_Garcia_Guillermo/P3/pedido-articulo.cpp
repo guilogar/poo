@@ -2,15 +2,89 @@
 #include "pedido-articulo.hpp"
 
 
-void Pedido_Articulo::pedir(Pedido& p, Articulo& a, double precio, unsigned cantidad = 1) {
+void Pedido_Articulo::pedir(Pedido& p, Articulo& a, double precio, unsigned cantidad) {
+    pedir(a, p, precio, cantidad);
+}
+
+void Pedido_Articulo::pedir(Articulo& a, Pedido& p, double precio, unsigned cantidad) {
+    if(pedidos_.find(&p) != pedidos_.end()) {
+        pedidos_.find(&p).insert(std::make_pair(&a, LineaPedido(precio, cantidad)));
+    } else {
+        ItemPedidos items;
+        item.insert(std::make_pair(&a, LineaPedido(precio, cantidad)));
+        pedidos_.insert(std::make_pair(&p, items));
+    }
+}
+const ItemsPedidos detalle(Pedido& p) const {
+    //if(pedidos_.find(&p) != pedidos_.end())
+    return pedidos_.find(&p);
+    //return null;
+}
+const Pedidos ventas(Articulo& a, double precio, unsigned cantidad) {
+    Pedidos p;
+    for (auto i: pedidos_) { // i es un pedido
+        ItemsPedidos ip = i.second.find(&a);
+        if(ip != i.second.end() && ip.precio() == precio && ip.cantidad == cantidad)
+            p.insert(i);
+    }
+    return p;
+}
+
+std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, Pedido_Articulo::ItemPedidos ip, Pedido_Articulo::Pedidos p) {
     
+    os << "PVP CANTIDAD Artículo" << std::endl;
+    os << "=====================" << std::endl;
+    
+    double total = 0;
+    for (auto i : ip) {
+        total += i.second.precio();
+        os << i.second.precio() << " € " << i.second.cantidad() << " " << *i.first << std::endl;
+    }
+    os << "=====================" << std::endl;
+    
+    char* total_str = new char[3];
+    sprintf(total_str, "%.2f", total);
+    
+    os << "Total " << total_str << " €" << std::endl;
+    
+    os << "[Pedidos: " << p.size() << "]" << std::endl;
+    os << "============" << std::endl;
+    os << "PVP CANTIDAD Fecha de Venta" << std::endl;
+    os << "=====================" << std::endl;
+    
+    total = 0;
+    unsigned cantidad = 0;
+    for (auto i : p) {
+        total += *(i.first).total();
+        cantidad += i.second.size();
+        os << *(i.first).total() << " € " << i.second.size() << " " << *(i.first).fecha() << std::endl;
+    }
+    os << "=====================" << std::endl;
+    
+    total_str = new char[3];
+    sprintf(total_str, "%.2f", total);
+    
+    cantidad_str = new char[3];
+    sprintf(cantidad_str, "%.2f", cantidad);
+    
+    os << "Total " << total_str << " € " << cantidad_str << std::endl;
+    
+    return os;
 }
 
-void Pedido_Articulo::pedir(Articulo& a, Pedido& p, double precio, unsigned cantidad = 1) {
-    //pedidos_.insert(std::make_pair(&p, ));
-}
-
-std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, Pedido_Articulo::ItemPedidos, Pedido_Articulo::Pedidos) {
+std::basic_ostream<char>& mostrarDetallesPedidos(std::basic_ostream<char>& os) {
+    double total = 0;
+    for (auto i : pedidos_) {
+        os << "Pedido núm. " << i.first->numero() << std::endl;
+        os << "Cliente " << i.first->tarjeta()->usuario->id() << "Fecha: " << i.first->fecha() << std::endl;
+        os << i.second << i << std::endl;
+        total += i.first->total();
+    }
+    
+    char* total_str = new char[3];
+    sprintf(total_str, "%.2f", total);
+    
+    os << "TOTAL VENTAS " << total_str << " €"<< std::endl;
     
     return os;
 }

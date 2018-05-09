@@ -56,14 +56,6 @@ class Pedido {
         double total_;
 };
 
-struct OrdenaArticulos {
-    bool operator() (Articulo *a1, Articulo *a2) { return a1 > a2; }
-};
-
-struct OrdenaPedidos {
-    bool operator() (int n1, int n2) { return n1 < n2; }
-};
-
 class LineaPedido {
     public:
         explicit LineaPedido(double precio_venta, unsigned cantidad = 1);
