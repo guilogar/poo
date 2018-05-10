@@ -3,4 +3,5 @@
 *.tar.gz
 *.out
 *.o
+*.d
 core
