@@ -9,29 +9,35 @@ void Pedido_Articulo::pedir(Pedido& p, Articulo& a, double precio, unsigned cant
 }
 
 void Pedido_Articulo::pedir(Articulo& a, Pedido& p, double precio, unsigned cantidad) {
-    /*
-     *if(pedidos_.find(&p) != pedidos_.end()) {
-     *    pedidos_.find(&p)->second.insert(std::make_pair(&a, LineaPedido(precio, cantidad)));
-     *} else {
-     *    ItemsPedido items;
-     *    items.insert(std::make_pair(&a, LineaPedido(precio, cantidad)));
-     *    pedidos_.insert(std::make_pair(&p, items));
-     *}
-     */
+    if(pedidos_articulos_.find(&p) != pedidos_articulos_.end()) {
+        pedidos_articulos_.find(&p)->second.insert(std::make_pair(&a, LineaPedido(precio, cantidad)));
+    } else {
+        ItemsPedido items;
+        items.insert(std::make_pair(&a, LineaPedido(precio, cantidad)));
+        pedidos_articulos_.insert(std::make_pair(&p, items));
+    }
+    
+    if(articulos_pedidos_.find(&a) != articulos_pedidos_.end()) {
+        articulos_pedidos_.find(&a)->second.insert(std::make_pair(&p, LineaPedido(precio, cantidad)));
+    } else {
+        Pedidos items;
+        items.insert(std::make_pair(&p, LineaPedido(precio, cantidad)));
+        articulos_pedidos_.insert(std::make_pair(&a, items));
+    }
 }
 
 const Pedido_Articulo::ItemsPedido Pedido_Articulo::detalle(Pedido& p) const {
     if(pedidos_articulos_.find(&p) != pedidos_articulos_.end())
         return pedidos_articulos_.find(&p)->second;
     else
-        throw Vacio();
+        return ItemsPedido();
 }
 
 const Pedido_Articulo::Pedidos Pedido_Articulo::ventas(Articulo& a) const {
     if(articulos_pedidos_.find(&a) != articulos_pedidos_.end())
         return articulos_pedidos_.find(&a)->second;
     else
-        throw Vacio();
+        return Pedidos();
 }
 
 std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Pedido_Articulo::ItemsPedido& ip) {

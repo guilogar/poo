@@ -32,7 +32,7 @@ INCLUDES  = -I${DIRFECHACADENA} -I${DIRTESTS} -I.
 
 # Compilador de C++ preferido: el de LLVM (clang++), el de GNU (g++),
 # el de GNU en la versión 5 (g++-5), el de Intel (icpc)...
-CXX = g++
+CXX = clang++
 
 # ¿Qué estándar seguir?
 # ansi o c++98 o c++03: estándar de 1998, corregido en 2003. NO USAR YA.
@@ -41,7 +41,7 @@ CXX = g++
 # c++14: estándar de 2014 - Recomendado si su compilador lo admite.
 # c++1y: borrador del est. de 2014. Si su compilador es antiguo pero no mucho.
 # c++1z o c++17: estándar previsto para 2017. Experimental, no recomendado.
-STD = c++11
+STD = c++14
 
 # Opciones para el compilador. Añada o quite las que prefiera pero deje
 # la primera. Recomendado: no quite ninguna.
