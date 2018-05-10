@@ -32,10 +32,12 @@ Pedido::Pedido(Usuario_Pedido& usuario_pedido, Pedido_Articulo& pedido_articulo,
 }
 
 std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Pedido& p) {
-    os << "Núm. pedido: " << p.numero();
-    os << "Fecha: " << p.fecha();
-    os << "Pagado con: " << p.tarjeta();
-    os << "Importe: " << p.total();
+    os << "Núm. pedido: " << p.numero() << std::endl;
+    os << "Fecha: " << p.fecha() << std::endl;
+    os << "Pagado con: ";
+    
+    os << p.tarjeta()->tipo() << " n.º: " << p.tarjeta()->numero() << std::endl;
+    os << "Importe: " << p.total() << " €"<< std::endl;
     
     return os;
 }
@@ -46,7 +48,8 @@ LineaPedido::LineaPedido(double precio_venta, unsigned cantidad)
 std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const LineaPedido& p) {
     char* precio_str = new char[3];
     sprintf(precio_str, "%.2f", p.precio_venta());
-    os << precio_str << " € " << p.cantidad() << std::endl;
+    
+    os << precio_str << " €\t" << p.cantidad();
     
     return os;
 }

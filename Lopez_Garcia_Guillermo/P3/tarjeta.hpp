@@ -48,7 +48,6 @@ class Tarjeta {
         void anular_titular();
         
         bool operator <(const Tarjeta& t) const;
-        friend std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Tarjeta& t);
         
         class Caducada {
             public:
@@ -66,5 +65,8 @@ class Tarjeta {
         Fecha caducidad_;
         Cadena titular_facial_;
 };
+
+std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Tarjeta& t);
+std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Tarjeta::Tipo& t);
 
 #endif

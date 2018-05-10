@@ -29,8 +29,6 @@ class Pedido {
         double total() const { return total_; }
         static int n_total_pedidos() { return N_pedidos; }
         
-        friend std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Pedido& p);
-        
         class Vacio {
             public:
                 Vacio(Usuario& u) : u_(u) {}
@@ -68,10 +66,11 @@ class LineaPedido {
         double precio_venta() const { return precio_venta_; }
         unsigned cantidad() const { return cantidad_; }
         
-        friend std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const LineaPedido& p);
     private:
         double precio_venta_;
         unsigned cantidad_;
 };
+std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Pedido& p);
+std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const LineaPedido& p);
 
 #endif

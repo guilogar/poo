@@ -51,7 +51,7 @@ Tarjeta::~Tarjeta() {
 std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Tarjeta::Tipo& t) {
     switch (t) {
         case Tarjeta::Tipo::VISA: os << "VISA"; break;
-        case Tarjeta::Tipo::Mastercard: os << "MasterCard"; break;
+        case Tarjeta::Tipo::Mastercard: os << "Mastercard"; break;
         case Tarjeta::Tipo::Maestro: os << "Maestro"; break;
         case Tarjeta::Tipo::JCB: os << "JCB"; break;
         case Tarjeta::Tipo::AmericanExpress: os << "AmericanExpress"; break;
