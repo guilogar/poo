@@ -33,25 +33,27 @@ class Pedido {
         
         class Vacio {
             public:
-                Vacio(Usuario& u) : u_(&u) {}
-                Vacio() {}
-                Usuario usuario() const { return u_; }
+                Vacio(Usuario& u) : u_(u) {}
+                Usuario& usuario() const { return u_; }
+                Usuario& usuario() { return u_; }
             private:
-                Usuario* u_;
+                Usuario& u_;
         };
         class Impostor {
             public:
-                Impostor(Usuario& u) : u_(&u) {}
-                Usuario usuario() const { return u_; }
+                Impostor(Usuario& u) : u_(u) {}
+                Usuario& usuario() const { return u_; }
+                Usuario& usuario() { return u_; }
             private:
-                Usuario* u_;
+                Usuario& u_;
         };
         class SinStock {
             public:
                 SinStock(Articulo& a) : a_(a) {}
-                Articulo articulo() const { return a_; }
+                Articulo& articulo() const { return a_; }
+                Articulo& articulo() { return a_; }
             private:
-                Articulo a_;
+                Articulo& a_;
         };
     private:
         int num_;

@@ -70,13 +70,15 @@ Usuario::Usuario(Cadena ident, Cadena nom, Cadena ape, Cadena direc, Clave con) 
     contrasena_ = con.clave();
 }
 
-Usuario::Usuario(const Usuario* u) {
-    identificador_ = u->id();
-    nombre_ = u->nombre();
-    apellidos_ = u->apellidos();
-    direccion_ = u->direccion();
-    contrasena_ = u->contrasena_;
-}
+/*
+ *Usuario::Usuario(const Usuario* u) {
+ *    identificador_ = u->id();
+ *    nombre_ = u->nombre();
+ *    apellidos_ = u->apellidos();
+ *    direccion_ = u->direccion();
+ *    contrasena_ = u->contrasena_;
+ *}
+ */
 
 void Usuario::es_titular_de(Tarjeta& j) {
     if((j.titular() == nullptr || j.titular() == this)) {

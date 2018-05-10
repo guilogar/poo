@@ -17,7 +17,8 @@ class Usuario_Pedido {
         void asocia(Pedido& p, Usuario& u);
         
         const Pedidos pedidos(Usuario& u) const;
-        const Usuario cliente(Pedido& p) const;
+        Usuario* cliente(Pedido& p) const;
+        class Vacio { };
     private:
         Pedidos pedidos_;
         Usuarios usuarios_;

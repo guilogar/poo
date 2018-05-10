@@ -51,7 +51,7 @@ class Usuario {
         
         Usuario(Cadena ident, Cadena nom, Cadena ape, Cadena direc, Cadena con);
         Usuario(Cadena ident, Cadena nom, Cadena ape, Cadena direc, Clave con);
-        Usuario(const Usuario* u);
+        //Usuario(const Usuario* u);
         void es_titular_de(Tarjeta& j);
         void no_es_titular_de(Tarjeta& j);
         

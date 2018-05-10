@@ -20,10 +20,10 @@ const Usuario_Pedido::Pedidos Usuario_Pedido::pedidos(Usuario& u) const {
     return usuarios_.find(&u)->second;
 }
 
-const Usuario Usuario_Pedido::cliente(Pedido& p) const {
+Usuario* Usuario_Pedido::cliente(Pedido& p) const {
     if(pedidos_.find(&p) != pedidos_.end())
         return p.tarjeta()->titular();
     else {
-        throw Pedido::Vacio();
+        throw Vacio();
     }
 }

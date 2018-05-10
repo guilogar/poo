@@ -3,6 +3,7 @@
 
 #include "articulo.hpp"
 #include "pedido.hpp"
+#include <map>
 
 class LineaPedido;
 class Pedido;
@@ -27,25 +28,28 @@ struct OrdenaPedidos {
 
 class Pedido_Articulo {
     public:
-        typedef std::map<Articulo*, LineaPedido, OrdenaArticulos> ItemsPedidos;
-        typedef std::map<Pedido*, ItemsPedidos, OrdenaPedidos> Pedidos;
+        typedef std::map<Articulo*, LineaPedido, OrdenaArticulos> ItemsPedido;
+        typedef std::map<Pedido*, ItemsPedido, OrdenaPedidos> PedidosArticulos;
+        
+        typedef std::map<Pedido*, LineaPedido, OrdenaPedidos> Pedidos;
+        typedef std::map<Articulo*, Pedidos, OrdenaArticulos> ArticulosPedidos;
         
         void pedir(Pedido& p, Articulo& a, double precio, unsigned cantidad = 1);
         void pedir(Articulo& a, Pedido& p, double precio, unsigned cantidad = 1);
-        const ItemsPedidos detalle(Pedido& p) const;
-        const Pedidos ventas(Articulo& a, double precio, unsigned cantidad);
-        
-        //const Pedidos ventas(Articulo& a) const;
-        //const ItemPedidos detalle(Pedido& p);
-        //const Pedidos ventas(Articulo& a);
-        
-        friend std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, ItemsPedidos ip);
-        friend std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, Pedidos p);
         
         std::basic_ostream<char>& mostrarDetallePedidos(std::basic_ostream<char>& os);
         std::basic_ostream<char>& mostrarVentasArticulos(std::basic_ostream<char>& os);
+        
+        const ItemsPedido detalle(Pedido& p) const;
+        const Pedidos ventas(Articulo& a) const;
+        
+        class Vacio {};
     private:
-        Pedidos pedidos_;
+        PedidosArticulos pedidos_articulos_;
+        ArticulosPedidos articulos_pedidos_;
 };
+
+std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Pedido_Articulo::ItemsPedido& ip);
+std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Pedido_Articulo::Pedidos& p);
 
 #endif
