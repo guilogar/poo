@@ -10,7 +10,7 @@ Numero::Numero(Cadena num) {
     
     auto res = std::remove_if(num.begin(), num.end(), [](unsigned char x) { return std::isspace(x); });
     num = num.substr(0, num.length() - strlen(res));
-    res = std::find_if(num.begin(), num.end(), [](char x) { return !std::isdigit(x); });
+    res = std::find_if(num.begin(), num.end(), [](unsigned char x) { return !std::isdigit(x); });
     
     if(num.length() < 13 || num.length() > 19) throw Incorrecto(LONGITUD);
     if(res != num.end()) throw Incorrecto(DIGITOS);
