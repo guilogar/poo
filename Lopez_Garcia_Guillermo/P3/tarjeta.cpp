@@ -2,27 +2,21 @@
 #define TARJETA_CPP
 
 #include "tarjeta.hpp"
+#include <algorithm>
 
 Numero::Numero(Cadena num) {
-    unsigned i;
-    Cadena number;
     
-    for (i = 0; i < num.length(); i++)
-        if(num[i] != ' ' && std::isdigit(num[i])) number += num[i];
+    if(num.length() == 0) throw Incorrecto(LONGITUD);
     
-    for (i = 0; i < number.length(); i++)
-        if(!std::isdigit(number[i])) break;
+    auto res = std::remove_if(num.begin(), num.end(), [](unsigned char x) { return std::isspace(x); });
+    num = num.substr(0, num.length() - strlen(res));
+    res = std::find_if(num.begin(), num.end(), [](char x) { return !std::isdigit(x); });
     
-    if(num[i] != ' ' && num[i] != '\0' && !std::isdigit(num[i]))
-        throw Incorrecto(DIGITOS);
+    if(num.length() < 13 || num.length() > 19) throw Incorrecto(LONGITUD);
+    if(res != num.end()) throw Incorrecto(DIGITOS);
+    if(!luhn(num)) throw Incorrecto(NO_VALIDO);
     
-    if(number.length() < 13 || number.length() > 19)
-        throw Incorrecto(LONGITUD);
-    
-    if(!luhn(number))
-        throw Incorrecto(NO_VALIDO);
-    
-    num_troq_ = number;
+    num_troq_ = num;
 }
 
 Tarjeta::Tarjeta(Tipo t, Numero n, Usuario& u, Fecha f) : tipo_(t), numero_(n) {
