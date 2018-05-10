@@ -27,7 +27,8 @@ Pedido::Pedido(Usuario_Pedido& usuario_pedido, Pedido_Articulo& pedido_articulo,
         total_ += precio * cantidad;
         u.compra(*pa, 0);
     }
-    usuario_pedido.asocia(u, *this);
+    //usuario_pedido.asocia(u, *this);
+    usuario_pedido.asocia(*this, u);
     ++N_pedidos;
 }
 

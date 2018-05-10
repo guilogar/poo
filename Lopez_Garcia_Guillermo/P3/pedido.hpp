@@ -11,8 +11,8 @@
 
 #include <map>
 
-class Pedido_Articulo;
 class Usuario_Pedido;
+class Pedido_Articulo;
 
 class Pedido {
     public:
@@ -34,6 +34,7 @@ class Pedido {
         class Vacio {
             public:
                 Vacio(Usuario& u) : u_(&u) {}
+                Vacio() {}
                 Usuario usuario() const { return u_; }
             private:
                 Usuario* u_;
@@ -70,6 +71,5 @@ class LineaPedido {
         double precio_venta_;
         unsigned cantidad_;
 };
-
 
 #endif

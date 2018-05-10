@@ -13,11 +13,11 @@ class Usuario_Pedido {
         typedef std::set<Pedido*> Pedidos;
         typedef std::map<Usuario*, Pedidos> Usuarios;
         
-        void asocia(const Usuario& u, const Pedido& p);
-        void asocia(const Pedido& p, const Usuario& u);
+        void asocia(Usuario& u, Pedido& p);
+        void asocia(Pedido& p, Usuario& u);
         
-        const Pedidos pedidos(const Usuario& u) const;
-        Usuario& cliente(const Pedido& p) const;
+        const Pedidos pedidos(Usuario& u) const;
+        const Usuario cliente(Pedido& p) const;
     private:
         Pedidos pedidos_;
         Usuarios usuarios_;

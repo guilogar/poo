@@ -60,8 +60,8 @@ VPATH     = .:${DIRFECHACADENA}:${DIRLUHN}:${DIRTESTS}
 # NOTA IMPORTANTE: usuario-pedido.cpp no hace falta si se hacen los métodos
 # de Usuario_Pedido inline, pero si se definen normales en usuario-pedido.cpp, 
 # añádase a OWN_SRCS y quítese usuario-pedido.hpp de OWN_HDRS.
-OWN_SRCS  = usuario.cpp tarjeta.cpp articulo.cpp pedido-articulo.cpp pedido.cpp
-OWN_HDRS  = $(OWN_SRCS:.cpp=.hpp) usuario-pedido.hpp
+OWN_SRCS  = usuario.cpp tarjeta.cpp articulo.cpp pedido-articulo.cpp pedido.cpp usuario-pedido.cpp
+OWN_HDRS  = $(OWN_SRCS:.cpp=.hpp)
 
 OWN_OBJS  = $(OWN_SRCS:.cpp=.o)
 
