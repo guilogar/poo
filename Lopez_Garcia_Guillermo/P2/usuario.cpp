@@ -48,17 +48,6 @@ std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Clave&
 
 Usuario::Usuarios Usuario::usuarios_;
 
-Usuario::Usuario(Cadena ident, Cadena nom, Cadena ape, Cadena direc, Cadena con) {
-    if(! this->usuarios_.insert(ident).second)
-        throw Id_duplicado(ident);
-    
-    identificador_ = ident;
-    nombre_ = nom;
-    apellidos_ = ape;
-    direccion_ = direc;
-    contrasena_ = Clave(con.c_str()).clave();
-}
-
 Usuario::Usuario(Cadena ident, Cadena nom, Cadena ape, Cadena direc, Clave con) {
     if(! usuarios_.insert(ident).second)
         throw Id_duplicado(ident);

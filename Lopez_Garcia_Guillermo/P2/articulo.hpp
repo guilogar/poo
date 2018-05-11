@@ -15,8 +15,6 @@ class Articulo {
         unsigned stock() const { return numero_ejem_; }
         unsigned& stock() { return numero_ejem_; }
         
-        friend std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Articulo& a);
-        
     private:
         Cadena cod_referencia_;
         Cadena titulo_;
@@ -24,5 +22,7 @@ class Articulo {
         double precio_;
         unsigned numero_ejem_;
 };
+
+std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Articulo& a);
 
 #endif

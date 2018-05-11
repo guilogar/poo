@@ -14,9 +14,9 @@ class Fecha {
         explicit Fecha(int dia = 0, int mes = 0, int anno = 0);
         Fecha(const char* s);
         
-        int dia() const;
-        int mes() const;
-        int anno() const;
+        int dia() const noexcept;
+        int mes() const noexcept;
+        int anno() const noexcept;
         
         friend std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Fecha& f);
         friend std::basic_istream<char>& operator >>(std::basic_istream<char>& is, Fecha& f);

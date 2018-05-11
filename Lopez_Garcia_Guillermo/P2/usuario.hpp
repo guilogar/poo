@@ -16,12 +16,11 @@ class Numero;
 
 class Clave {
     public:
-        explicit Clave(const char* = "");
+        Clave(const char* = "");
         Clave(const Clave& c);
         Cadena clave() const { return clave_; };
         bool verifica(const char*) const;
         
-        friend std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Clave& c);
         enum Razon {CORTA, ERROR_CRYPT};
         class Incorrecta {
             public:
@@ -49,7 +48,7 @@ class Usuario {
         typedef std::unordered_set<Cadena> Usuarios;
         static Usuarios usuarios_;
         
-        Usuario(Cadena ident, Cadena nom, Cadena ape, Cadena direc, Cadena con);
+        //explicit Usuario(Cadena ident, Cadena nom, Cadena ape, Cadena direc, Cadena con);
         Usuario(Cadena ident, Cadena nom, Cadena ape, Cadena direc, Clave con);
         void es_titular_de(Tarjeta& j);
         void no_es_titular_de(Tarjeta& j);
@@ -74,6 +73,7 @@ class Usuario {
         Usuario& operator =(Usuario&& u) = delete;
         
         friend std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Usuario& u);
+        
         ~Usuario();
         class Id_duplicado {
             public:
@@ -92,6 +92,7 @@ class Usuario {
         Articulos articulos_;
 };
 
+std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Clave& c);
 void mostrar_carro(std::basic_ostream<char>&, const Usuario&);
 
 #endif

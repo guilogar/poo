@@ -1,10 +1,7 @@
 #ifndef CADENA_HPP
 #define CADENA_HPP
 
-#include <iostream>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cstring>
 #include <iterator>
 
 class Cadena {
@@ -17,7 +14,7 @@ class Cadena {
         Cadena(const Cadena& c);
         Cadena(Cadena&& c);
         
-        unsigned length() const;
+        unsigned length() const noexcept;
         
         Cadena substr(int init = 0, int tam = 0) const;
         
@@ -25,7 +22,6 @@ class Cadena {
         char& operator[](int pos) const;
         
         const char* c_str() const { return cad_; }
-        friend std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Cadena& c);
         friend std::basic_istream<char>& operator >>(std::basic_istream<char>& is, Cadena& c);
         
         Cadena& operator =(const Cadena& c);
@@ -34,13 +30,6 @@ class Cadena {
         Cadena operator +(const Cadena& c) const;
         Cadena& operator +=(const Cadena& c);
         Cadena& operator +=(const char&);
-        
-        friend bool operator ==(const Cadena& p, const Cadena& c);
-        friend bool operator !=(const Cadena& p, const Cadena& c);
-        friend bool operator  >(const Cadena& p, const Cadena& c);
-        friend bool operator  <(const Cadena& p, const Cadena& c);
-        friend bool operator >=(const Cadena& p, const Cadena& c);
-        friend bool operator <=(const Cadena& p, const Cadena& c);
         
         ~Cadena();
         
@@ -95,4 +84,13 @@ class Cadena {
         int tamanio_, tamanioMaximo_ = 32;
         char* cad_;
 };
+bool operator ==(const Cadena& p, const Cadena& c);
+bool operator !=(const Cadena& p, const Cadena& c);
+bool operator  >(const Cadena& p, const Cadena& c);
+bool operator  <(const Cadena& p, const Cadena& c);
+bool operator >=(const Cadena& p, const Cadena& c);
+bool operator <=(const Cadena& p, const Cadena& c);
+
+std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Cadena& c);
+
 #endif

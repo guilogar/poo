@@ -15,16 +15,6 @@ struct OrdenaArticulos {
 struct OrdenaPedidos {
     bool operator() (Pedido* p1, Pedido* p2) const;
 };
-/*
- *struct OrdenaArticulos {
- *    bool operator() (Articulo *a1, Articulo *a2) const { return a1 > a2; }
- *};
- *
- *struct OrdenaPedidos {
- *    bool operator() (Pedido* p1, Pedido* p2) const { return p1->numero() < p2->numero(); }
- *};
- */
-
 
 class Pedido_Articulo {
     public:
@@ -42,8 +32,6 @@ class Pedido_Articulo {
         
         const ItemsPedido detalle(Pedido& p) const;
         const Pedidos ventas(Articulo& a) const;
-        
-        class Vacio {};
     private:
         PedidosArticulos pedidos_articulos_;
         ArticulosPedidos articulos_pedidos_;

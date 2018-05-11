@@ -43,15 +43,9 @@ Fecha::Fecha(const char* s) {
     (correct_format) ? *this = Fecha(dia, mes, anno) : throw Invalida("Formato Incorrecto.");
 }
 
-int Fecha::dia() const {
-    return dia_;
-}
-int Fecha::mes() const {
-    return mes_;
-}
-int Fecha::anno() const {
-    return anno_;
-}
+inline int Fecha::dia() const noexcept { return dia_; }
+inline int Fecha::mes() const noexcept { return mes_; }
+inline int Fecha::anno() const noexcept { return anno_; }
 
 const char* Fecha::cadena() const {
     char* fecha = new char[250];

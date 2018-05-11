@@ -16,7 +16,7 @@ class Numero;
 
 class Clave {
     public:
-        explicit Clave(const char* = "");
+        Clave(const char* = "");
         Clave(const Clave& c);
         Cadena clave() const { return clave_; };
         bool verifica(const char*) const;
@@ -49,9 +49,7 @@ class Usuario {
         typedef std::unordered_set<Cadena> Usuarios;
         static Usuarios usuarios_;
         
-        Usuario(Cadena ident, Cadena nom, Cadena ape, Cadena direc, Cadena con);
         Usuario(Cadena ident, Cadena nom, Cadena ape, Cadena direc, Clave con);
-        //Usuario(const Usuario* u);
         void es_titular_de(Tarjeta& j);
         void no_es_titular_de(Tarjeta& j);
         

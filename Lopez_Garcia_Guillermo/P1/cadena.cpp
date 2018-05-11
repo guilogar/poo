@@ -58,7 +58,7 @@ Cadena::Cadena(Cadena&& c) {
 }
 
 // Metodo observador.
-unsigned Cadena::length() const {
+inline unsigned Cadena::length() const noexcept {
     return tamanio_;
 }
 
@@ -229,9 +229,9 @@ bool operator <=(const Cadena& p, const Cadena& c) {
 
 // Destructor.
 Cadena::~Cadena() {
-    if(tamanio_ > 0) {
-        delete[] cad_;
+    if(tamanio_ > 0 && cad_ != nullptr) {
         tamanio_ = 0;
+        delete[] cad_;
         cad_ = nullptr;
     }
 }
