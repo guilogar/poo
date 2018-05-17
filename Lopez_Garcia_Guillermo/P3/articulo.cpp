@@ -11,14 +11,14 @@ Articulo::Articulo(Cadena cod, Cadena tit, Fecha f, double pr, int num) {
     numero_ejem_ = num;
 }
 
-std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Articulo& a) {
-    char* precio_str = new char[3];
-    sprintf(precio_str, "%.2f", a.precio());
-    
+std::basic_ostream<char>& operator <<
+(std::basic_ostream<char>& os, const Articulo& a) {
+
     os << "[" << a.referencia() << "] " << "\"" << a.titulo() << "\", ";
-    os << a.f_publi().anno() << ". " << precio_str << " €";
+    os << a.f_publi().anno() << ". " << setiosflags(ios::fixed) <<
+    setprecision(2) << a.precio() << " €";
     os << std::endl;
-    
+
     return os;
 }
 

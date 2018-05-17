@@ -1,8 +1,12 @@
 #ifndef ARTICULO_H
 #define ARTICULO_H
 
+#include <iostream>
+#include <iomanip>
 #include "fecha.hpp"
 #include "cadena.hpp"
+
+using namespace std;
 
 class Articulo {
     public:
@@ -14,7 +18,7 @@ class Articulo {
         double& precio() { return precio_; }
         unsigned stock() const { return numero_ejem_; }
         unsigned& stock() { return numero_ejem_; }
-        
+
     private:
         Cadena cod_referencia_;
         Cadena titulo_;
