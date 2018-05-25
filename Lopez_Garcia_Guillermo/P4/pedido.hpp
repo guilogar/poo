@@ -10,6 +10,7 @@
 #include "pedido-articulo.hpp"
 
 #include <map>
+#include <typeinfo>
 
 class Usuario_Pedido;
 class Pedido_Articulo;

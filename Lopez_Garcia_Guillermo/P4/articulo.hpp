@@ -12,9 +12,9 @@ using namespace std;
 class Autor {
     public:
         Autor(Cadena nombre, Cadena apellidos, Cadena direccion);
-        Cadena nombre() const { return nombre_; }
-        Cadena apellidos() const { return apellidos_; }
-        Cadena direccion() const { return direccion_; }
+        Cadena nombre() const noexcept { return nombre_; }
+        Cadena apellidos() const noexcept { return apellidos_; }
+        Cadena direccion() const noexcept { return direccion_; }
     private:
         Cadena nombre_;
         Cadena apellidos_;
@@ -33,8 +33,6 @@ class Articulo {
         double& precio()          { return precio_; }
         Autores autores() const   { return a_; }
         
-        virtual unsigned stock() const = 0;
-        virtual unsigned& stock() = 0;
         virtual void impresion_especifica(std::basic_ostream<char>& os) const = 0;
         
         class Autores_vacios { };
@@ -51,41 +49,39 @@ class Articulo {
 class LibroDigital : public Articulo {
     public:
         LibroDigital(Autores a, Cadena cod, Cadena tit, Fecha f, double pr, Fecha limite);
-        Fecha f_expir() const { return limite_; }
-        unsigned stock() const { return 0; }
-        unsigned& stock() { return p; }
+        Fecha f_expir() const { return f_expir_; }
         void impresion_especifica(std::basic_ostream<char>& os) const;
     private:
-        unsigned p;
-        Fecha limite_;
+        Fecha f_expir_;
 };
 
 class ArticuloAlmacenable : public Articulo {
     public:
         ArticuloAlmacenable(Autores a, Cadena cod, Cadena tit, Fecha f, double pr, unsigned num = 0);
-        unsigned stock() const { return num_ejem_; }
-        unsigned& stock() { return num_ejem_; }
+        unsigned stock() const { return stock_; }
+        unsigned& stock() { return stock_; }
+        virtual void impresion_especifica(std::basic_ostream<char>& os) const = 0;
         virtual ~ArticuloAlmacenable();
-    private:
-        unsigned num_ejem_;
+    protected:
+        unsigned stock_;
 };
 
 class Libro : public ArticuloAlmacenable {
     public:
-        Libro(Autores a, Cadena cod, Cadena tit, Fecha f, double pr, unsigned num, size_t num_pags = 0);
-        size_t n_pag() const { return num_pags_; }
+        Libro(Autores a, Cadena cod, Cadena tit, Fecha f, double pr, size_t num_pags = 0, unsigned num = 0);
+        size_t n_pag() const { return n_pag_; }
         void impresion_especifica(std::basic_ostream<char>& os) const;
     private:
-        size_t num_pags_;
+        size_t n_pag_;
 };
 
 class Cederron : public ArticuloAlmacenable {
     public:
-        Cederron(Autores a, Cadena cod, Cadena tit, Fecha f, double pr, unsigned num, double tamanio);
-        double tam() const { return tamanio_; }
+        Cederron(Autores a, Cadena cod, Cadena tit, Fecha f, double pr, double tamanio, unsigned num = 0);
+        double tam() const { return tam_; }
         void impresion_especifica(std::basic_ostream<char>& os) const;
     private:
-        double tamanio_;
+        double tam_;
 };
 
 std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Articulo& a);

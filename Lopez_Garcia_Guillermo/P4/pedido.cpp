@@ -10,23 +10,37 @@ Pedido::Pedido(Usuario_Pedido& usuario_pedido, Pedido_Articulo& pedido_articulo,
     if(t.titular() != &u)    throw Impostor(u); // ¿Tarjetita mangada?
     if(t.caducidad() < fp)   throw Tarjeta::Caducada(t.caducidad());
     
-    for (auto c : u.compra())                   // c es pair<Articulo*, unsigned> (cantidad)
-        if(c.first->stock() < c.second) {       // No hay bastante en el almacén
-            const_cast<Usuario::Articulos&>(u.compra()) .clear();
-            throw SinStock(*(c.first));
+    for (auto c : u.compra()) {                                                      // c es pair<Articulo*, unsigned> (cantidad)
+        if(ArticuloAlmacenable *aa = dynamic_cast<ArticuloAlmacenable*>(c.first)) {  // Se comprueba el puntero a ArticuloAlmacen
+            if(aa->stock() < c.second) {                                             // No hay bastante en el almacén
+                const_cast<Usuario::Articulos&>(u.compra()).clear();
+                throw SinStock(*(c.first));
+            }
         }
+    }
     
+    unsigned nle = 0; // numero de libros expirados
+    unsigned na = 0;  // numero de articulos con stock
     Usuario::Articulos carro = u.compra();
     for(auto c : carro) {
         Articulo* pa = c.first;
         unsigned int cantidad = c.second;
         double precio = pa->precio();
         
-        pa->stock() -= cantidad;
-        pedido_articulo.pedir(*this, *pa, precio, cantidad);
+        if(ArticuloAlmacenable *pa = dynamic_cast<ArticuloAlmacenable*>(c.first)) {  // Se comprueba el puntero a ArticuloAlmacen
+            pa->stock() -= cantidad;
+            pedido_articulo.pedir(*this, *pa, precio, cantidad);
+            u.compra(*pa, 0);
+            na++;
+        } else if(LibroDigital *lg = dynamic_cast<LibroDigital*>(c.first)) {  // Se comprueba el puntero a LibroDigital
+            u.compra(*lg, 0);
+            if(lg->f_expir() < fp) { nle++; continue; }
+            pedido_articulo.pedir(*this, *lg, precio, cantidad);
+        }
         total_ += precio * cantidad;
-        u.compra(*pa, 0);
     }
+    if(na == 0 && nle > 0) throw Vacio(u);
+    
     usuario_pedido.asocia(u, *this);
     ++N_pedidos;
 }

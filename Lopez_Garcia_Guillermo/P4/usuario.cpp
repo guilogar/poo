@@ -9,6 +9,8 @@ extern "C" {
 }
 
 #include <random>
+#include <iostream>
+#include <iomanip>
 
 Clave::Clave(const char* contrasena) {
     if(strlen(contrasena) < 5) throw Incorrecta(CORTA);
@@ -111,8 +113,11 @@ void mostrar_carro(std::basic_ostream<char>& os, const Usuario& u) {
         os << "Carrito de la compra de " << u.id() << " [Artículos: " << u.n_articulos() << "] " << "Cant. Articulo" << std::endl;
         os << "=======================================================================================================" << std::endl;
         
-        for (auto i : u.compra())
-            os << *i.first << std::endl;
+        for (auto i : u.compra()) {
+            os << "[" << i.first->referencia() << "]" << " \"" << i.first->titulo() << "\", ";
+            os << i.first->f_publi().anno() << ". " << setiosflags(ios::fixed) << setprecision(2);
+            os << i.first->precio() << " €" << std::endl;
+        }
     }
 }
 

@@ -48,7 +48,7 @@ std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Pedido
     double total = 0;
     for (auto i : ip) {
         total += i.second.precio_venta() * i.second.cantidad();
-        os << i.second.precio_venta() << " € " << i.second.cantidad() << " " << *i.first;
+        os << i.second.precio_venta() << " € " << i.second.cantidad() << " " << *i.first << std::endl;
     }
     os << "=====================" << std::endl;
     
