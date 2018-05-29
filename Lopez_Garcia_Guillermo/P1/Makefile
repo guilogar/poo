@@ -9,6 +9,9 @@ VPATH = ../Tests-auto:.
 
 all: test-P1-auto
 
+valgrind: test-P1-auto
+	valgrind --quiet ./test-P1-auto --logger=minimal
+
 test-P1-auto: $(OBJETOS)
 	$(CXX) -o $@ $(LDFLAGS) $(OBJETOS)
 

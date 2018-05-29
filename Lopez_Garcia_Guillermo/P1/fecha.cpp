@@ -48,9 +48,9 @@ inline int Fecha::mes() const noexcept { return mes_; }
 inline int Fecha::anno() const noexcept { return anno_; }
 
 const char* Fecha::cadena() const {
-    char* fecha = new char[250];
-    char* dia_str = new char[2];
-    char* anno_str = new char[4];
+    static char* fecha = new char[250];
+    char* dia_str = new char[3];
+    char* anno_str = new char[5];
     
     strcpy(fecha, "");
     

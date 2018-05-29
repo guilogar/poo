@@ -17,7 +17,7 @@ Cadena::Cadena(const char* cad, int init, int tam) {
     
     cad_ = new char[tam + 1];
     for (int i = init, j = 0; i < init+tam && cad[i] != '\0'; i++, j++) { cad_[j] = cad[i]; }
-    cad_[tam + 1] = '\0';
+    cad_[tam] = '\0';
 }
 
 Cadena::Cadena(int tamanio, const char caracter) {
@@ -49,11 +49,10 @@ Cadena::Cadena(const Cadena& c) {
 }
 
 Cadena::Cadena(Cadena&& c) {
-    tamanio_ = c.length();
-    cad_ = new char[tamanio_ + 1];
-    strcpy(cad_, c.cad_);
+    tamanio_ = c.tamanio_;
+    cad_ = c.cad_;
     
-    c.cad_ = new char[0];
+    c.cad_ = nullptr;
     c.tamanio_ = 0;
 }
 
@@ -67,7 +66,7 @@ Cadena Cadena::substr(int init, int tam) const {
     if (init < 0) throw std::out_of_range ("Tamaño maximo excedido.");
     if (tam < 0) throw std::out_of_range ("Tamaño maximo excedido.");
     
-    char* cc = new char[tam];
+    char* cc = new char[tam + 1];
     for (int i = init, j = 0; i < init+tam; i++, j++) { cc[j] = cad_[i]; }
     cc[tam] = '\0';
     return Cadena(cc);
@@ -86,14 +85,14 @@ std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Cadena
 
 std::basic_istream<char>& operator >>(std::basic_istream<char>& is, Cadena& c) {
     
-    char* palabra = new char[c.tamanioMaximo_];
+    char* palabra = new char[c.tamanioMaximo_ + 1];
     palabra[0] = '\0';
     
     is.width(c.tamanioMaximo_ + 1);
     
     is >> palabra;
     c.tamanio_ = strlen(palabra);
-    c.cad_ = new char[c.tamanio_];
+    c.cad_ = new char[c.tamanio_ + 1];
     
     strcpy(c.cad_, palabra);
     
@@ -152,11 +151,10 @@ Cadena& Cadena::operator =(const Cadena& c) {
 
 Cadena& Cadena::operator =(Cadena&& c) noexcept {
     if(this != &c) {
-        tamanio_ = c.length();
-        cad_ = new char[tamanio_ + 1];
-        strcpy(cad_, c.cad_);
+        tamanio_ = c.tamanio_;
+        cad_ = c.cad_;
         
-        c.cad_ = new char[0];
+        c.cad_ = nullptr;
         c.tamanio_ = 0;
     }
     return *this;
