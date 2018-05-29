@@ -1,6 +1,19 @@
 
 #include "pedido-articulo.hpp"
 
+LineaPedido::LineaPedido(double precio_venta, unsigned cantidad)
+            : precio_venta_(precio_venta), cantidad_(cantidad) {}
+
+std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const LineaPedido& p) {
+    char* precio_str = new char[3];
+    sprintf(precio_str, "%.2f", p.precio_venta());
+    
+    os << precio_str << " €\t" << p.cantidad();
+    
+    return os;
+}
+
+
 inline bool OrdenaArticulos::operator() (Articulo* a1, Articulo* a2) const { return a1 > a2; }
 inline bool OrdenaPedidos::operator() (Pedido* p1, Pedido* p2) const { return p1->numero() < p2->numero(); }// return (p1->numero() > p2->numero()); }
 

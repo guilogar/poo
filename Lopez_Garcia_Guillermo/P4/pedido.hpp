@@ -61,17 +61,6 @@ class Pedido {
         double total_;
 };
 
-class LineaPedido {
-    public:
-        explicit LineaPedido(double precio_venta, unsigned cantidad = 1);
-        double precio_venta() const { return precio_venta_; }
-        unsigned cantidad() const { return cantidad_; }
-        
-    private:
-        double precio_venta_;
-        unsigned cantidad_;
-};
 std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Pedido& p);
-std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const LineaPedido& p);
 
 #endif

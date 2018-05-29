@@ -19,7 +19,7 @@ Clave::Clave(const char* contrasena) {
                                    "ABCDEFGHIJKLMNOPQRS"
                                    "TUVWXYZ0123456789/.";
     std::size_t longtd = sizeof(cvs) - 1;
-    std::random_device r;
+    static std::random_device r;
     std::uniform_int_distribution<std::size_t> distribucion(0, longtd - 1);
     char sal[] = {
                     cvs[distribucion.operator()(r)],

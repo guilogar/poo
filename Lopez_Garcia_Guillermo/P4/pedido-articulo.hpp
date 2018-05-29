@@ -16,6 +16,17 @@ struct OrdenaPedidos {
     bool operator() (Pedido* p1, Pedido* p2) const;
 };
 
+class LineaPedido {
+    public:
+        explicit LineaPedido(double precio_venta, unsigned cantidad = 1);
+        double precio_venta() const { return precio_venta_; }
+        unsigned cantidad() const { return cantidad_; }
+        
+    private:
+        double precio_venta_;
+        unsigned cantidad_;
+};
+
 class Pedido_Articulo {
     public:
         typedef std::map<Articulo*, LineaPedido, OrdenaArticulos> ItemsPedido;
@@ -37,6 +48,7 @@ class Pedido_Articulo {
         ArticulosPedidos articulos_pedidos_;
 };
 
+std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const LineaPedido& p);
 std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Pedido_Articulo::ItemsPedido& ip);
 std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Pedido_Articulo::Pedidos& p);
 
