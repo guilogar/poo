@@ -30,7 +30,7 @@ Cadena::Cadena(int tamanio, const char caracter) {
 
 Cadena::Cadena(const char* cad) {
     tamanio_ = strlen(cad);
-    cad_ = new char[tamanio_];
+    cad_ = new char[tamanio_ + 1];
     strcpy(cad_, cad);
 }
 
