@@ -214,7 +214,7 @@ else
 		${NOMBREALUMNO}/${DFC}/fecha.hpp  \
 		${NOMBREALUMNO}/${DFC}/fecha.cpp  \
 		${NOMBREALUMNO}/${DFC}/Makefile   \
-#		$D/usuario-pedido.cpp
+		$D/usuario-pedido.cpp
 # Descomentar la línea anterior si se ha escrito este fichero usuario-pedido.cpp
 endif
 
