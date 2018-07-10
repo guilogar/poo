@@ -57,17 +57,14 @@ std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Pedido
     os << "PVP CANTIDAD Artículo" << std::endl;
     os << "=====================" << std::endl;
     
+    os << setiosflags(ios::fixed) << setprecision(2);
+    
     double total = 0;
     for (auto i : ip) {
         total += i.second.precio_venta() * i.second.cantidad();
         os << i.second.precio_venta() << " € " << i.second.cantidad() << " " << *i.first << std::endl;
     }
-    os << "=====================" << std::endl;
-    
-    char* total_str = new char[3];
-    sprintf(total_str, "%.2f", total);
-    
-    os << "Total " << total_str << " €" << std::endl;
+    os << "Total " << total << " €" << std::endl;
     
     return os;
 }
@@ -78,6 +75,7 @@ std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Pedido
     os << "===========================" << std::endl;
     os << "PVP CANTIDAD Fecha de Venta" << std::endl;
     os << "===========================" << std::endl;
+    os << setiosflags(ios::fixed) << setprecision(2);
     
     double total = 0;
     unsigned cantidad = 0;
@@ -87,17 +85,15 @@ std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Pedido
         os << i.first->total() << " € " << i.second.cantidad() << " " << i.first->fecha() << std::endl;
     }
     os << "=====================" << std::endl;
-    
-    char* total_str = new char[3];
-    sprintf(total_str, "%.2f", total);
-    
-    os << "Total " << total_str << " € " << cantidad << std::endl;
+    os << "Total " << total << " € " << cantidad << std::endl;
     
     return os;
 }
 
 std::basic_ostream<char>& Pedido_Articulo::mostrarDetallePedidos(std::basic_ostream<char>& os) {
     double total = 0;
+    os << setiosflags(ios::fixed) << setprecision(2);
+    
     for (auto i : pedidos_articulos_) {
         os << "Pedido núm. " << i.first->numero() << std::endl;
         os << "Cliente " << i.first->tarjeta()->titular()->id() << " Fecha: " << i.first->fecha() << std::endl;
@@ -105,10 +101,7 @@ std::basic_ostream<char>& Pedido_Articulo::mostrarDetallePedidos(std::basic_ostr
         total += i.first->total();
     }
     
-    char* total_str = new char[3];
-    sprintf(total_str, "%.2f", total);
-    
-    os << "TOTAL VENTAS " << total_str << " €"<< std::endl;
+    os << "TOTAL VENTAS " << total << " €"<< std::endl;
     
     return os;
 }

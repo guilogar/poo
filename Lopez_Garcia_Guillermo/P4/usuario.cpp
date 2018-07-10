@@ -77,8 +77,11 @@ void Usuario::no_es_titular_de(Tarjeta& j) {
 
 void Usuario::compra(Articulo& a, unsigned cant) {
     Articulos::iterator it = articulos_.find(&a);
-    if(it == articulos_.end())
-        articulos_.insert(std::make_pair(&a, cant));
+    
+    if(it == articulos_.end()) {
+        if(cant > 0)
+            articulos_.insert(std::make_pair(&a, cant));
+    }
     else {
         if(cant == 0) articulos_.erase(it);
         else it->second = cant;

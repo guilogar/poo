@@ -209,12 +209,14 @@ else
 		$D/pedido.hpp   $D/pedido.cpp   \
 		$D/pedido-articulo.cpp $D/pedido-articulo.hpp \
 		$D/usuario-pedido.hpp \
+		$D/Makefile \
 		${NOMBREALUMNO}/${DFC}/cadena.hpp \
 		${NOMBREALUMNO}/${DFC}/cadena.cpp \
 		${NOMBREALUMNO}/${DFC}/fecha.hpp  \
 		${NOMBREALUMNO}/${DFC}/fecha.cpp  \
 		${NOMBREALUMNO}/${DFC}/Makefile   \
-		$D/usuario-pedido.cpp
+		$D/usuario-pedido.cpp \
+		${NOMBREALUMNO}/luhn.hpp
 # Descomentar la línea anterior si se ha escrito este fichero usuario-pedido.cpp
 endif
 
