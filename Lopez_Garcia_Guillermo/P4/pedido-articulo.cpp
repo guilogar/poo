@@ -82,7 +82,7 @@ std::basic_ostream<char>& operator <<(std::basic_ostream<char>& os, const Pedido
     for (auto i : p) {
         total += i.second.precio_venta() * i.second.cantidad();
         cantidad += i.second.cantidad();
-        os << i.first->total() << " € " << i.second.cantidad() << " " << i.first->fecha() << std::endl;
+        os << i.second.precio_venta() << " € " << i.second.cantidad() << " " << i.first->fecha() << std::endl;
     }
     os << "=====================" << std::endl;
     os << "Total " << total << " € " << cantidad << std::endl;
